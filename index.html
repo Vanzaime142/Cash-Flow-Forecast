@@ -24,13 +24,17 @@
   .stepper button{font:inherit;font-size:15px;font-weight:700;width:26px;height:26px;border:none;border-radius:6px;background:#fff;color:var(--navy);cursor:pointer;line-height:1}
   .stepper button:hover{background:var(--mist)}
   /* tabs */
-  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 14px}
-  .tab{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--steel);padding:8px 15px;border-radius:9px}
-  .tab:hover{background:var(--mist)}
-  .tab.on{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 2px 8px rgba(31,56,100,.25)}
-  .tab.grp{background:#f0f4fa}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 16px;padding:10px;background:#1f3864;border:1px solid #142744;border-radius:12px;box-shadow:0 2px 8px rgba(15,26,47,.25)}
+  .tab{font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;border:2.5px solid #c46a1c;background:#f5952f;color:#fff;padding:10px 20px;border-radius:10px;transition:all .12s;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+  .tab:hover{background:#e78320;border-color:#a85812;transform:translateY(-1px)}
+  /* selected tab: deep navy with a gold ring — clearly distinct from the orange unselected tabs */
+  .tab.on{background:#0d2748;color:#fff;border-color:#ffb84d;box-shadow:0 0 0 2px #ffb84d, 0 4px 14px rgba(0,0,0,.45);transform:translateY(-1px)}
+  .tab.grp{background:#f7a94d;border-color:#cf7d24;color:#5a3208}
+  .tab.grp.on{background:#0d2748;color:#fff;border-color:#ffb84d;box-shadow:0 0 0 2px #ffb84d, 0 4px 14px rgba(0,0,0,.45)}
   .view{display:none}.view.on{display:block}
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 16px}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0 0 16px}
+  @media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:680px){.kpis{grid-template-columns:repeat(2,1fr)}}
   .kpi{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px 15px;box-shadow:var(--shadow)}
   .kpi .lab{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--steel);font-weight:700}
   .kpi .val{font-size:22px;font-weight:750;margin-top:3px;color:var(--navy);font-variant-numeric:tabular-nums}
@@ -38,7 +42,8 @@
   .kpi.min{border-top:3px solid var(--crim)}.kpi.end{border-top:3px solid var(--teal)}.kpi.in{border-top:3px solid var(--green)}.kpi.out{border-top:3px solid var(--gold)}
   .panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
   .panel h3{margin:0;padding:12px 16px;font-size:13px;border-bottom:1px solid var(--line);background:var(--mist);color:var(--navy);display:flex;justify-content:space-between;align-items:center}
-  .chartwrap{padding:12px 16px 2px}
+  .chartwrap{padding:12px 16px 2px;width:100%}
+  .chartwrap svg{display:block;width:100%;height:auto}
   .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;padding:0 16px 10px;color:#41506a}
   .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:middle}
   .tablecard{overflow-x:auto;margin-top:14px}
@@ -92,12 +97,58 @@
   tbody tr.detail-sub td.lbl{background:var(--eb,#305496)!important;color:#fff;font-weight:800;text-transform:uppercase;letter-spacing:.4px;font-size:11.5px}
   tbody tr.detail-sub td .cellv{color:#fff}
   tbody tr.detailitem td.lbl{border-left:4px solid var(--eac,#305496)}
-  tbody tr.detail-subsub td{background:#eef2f8!important;color:var(--navy);font-weight:700;font-style:italic}
-  tbody tr.detail-subsub td.lbl{background:#eef2f8!important;color:var(--navy);font-weight:800;font-style:normal;border-left:4px solid var(--eac,#305496);padding-left:16px;font-size:11px;text-transform:uppercase;letter-spacing:.3px}
+  tbody tr.detail-subsub td{background:#e2d9f0!important;color:#4a2d78;font-weight:700;font-style:italic}
+  tbody tr.detail-subsub td.lbl{background:#d8ccec!important;color:#3d2566;font-weight:800;font-style:normal;border-left:4px solid #7a5195;padding-left:16px;font-size:11px;text-transform:uppercase;letter-spacing:.3px}
   /* AR pass-through lines (ETFS Due / Shusher Corp Due) feed other summary lines, not the AR pNeo total */
   tbody tr.detailitem.passthru td{background:#fff5e0!important}
   tbody tr.detailitem.passthru td.lbl{background:#fdeecb!important;color:#8a5a00;font-weight:700;border-left:4px solid #e0a72e;font-style:italic}
   tbody tr.detailitem.passthru td.edit input{background:#fff5e0}
+  /* add-line rows in summary sections */
+  tbody tr.addrow td{background:#fafbfe;padding:3px 8px;border-top:1px dashed #cdd7ea}
+  button.addsumline{background:#eef2fb;border:1px solid #c3d0e8;color:#305496;font-size:11px;font-weight:700;border-radius:5px;padding:3px 10px;cursor:pointer}
+  button.addsumline:hover{background:#dfe8f8}
+  select.drawsrc{font-size:10.5px;margin-left:6px;padding:1px 3px;border:1px solid #c3d0e8;border-radius:4px;color:#305496;background:#fff;cursor:pointer;vertical-align:middle}
+  tbody tr.useradded td.lbl input.sumlbledit{border:1px solid #c9d4e8;border-radius:4px;padding:2px 5px;font-size:12px;width:60%;color:var(--navy)}
+  button.delsumrow{background:none;border:none;color:#b23;font-size:12px;cursor:pointer;margin-left:6px}
+  button.delsumrow:hover{color:#e33}
+  .caret{cursor:pointer;display:inline-block;width:14px;color:inherit;opacity:.85;font-size:11px;user-select:none}
+  .caret:hover{opacity:1}
+  button.adddetailline{background:#eef2fb;border:1px solid #c3d0e8;color:#305496;font-size:11px;font-weight:700;border-radius:5px;padding:2px 10px;cursor:pointer;margin-left:8px}
+  button.adddetailline:hover{background:#dfe8f8}
+  tr.detailadd td{background:#fafbfe;padding:2px 8px;border-top:1px dashed #d6deec}
+  .startbox{font-size:10px;color:#8a6d1f;margin-left:8px;font-weight:600;text-transform:none;letter-spacing:0}
+  input.startavail{width:78px;font-size:11px;padding:1px 4px;border:1px solid #d8c98a;border-radius:4px;background:#fffdf5;color:#6b5417;text-align:right}
+  .saverow{display:flex;align-items:center;gap:8px}
+  .saveind{font-size:11px;color:#1f7a6d;font-weight:700;opacity:.45;transition:opacity .3s}
+  .resetbtn{background:#fff;border:1px solid #cdd7ea;color:#305496;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer}
+  .resetbtn:hover{background:#f0f4fb}
+  .rankgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 16px}
+  .rankpanel h3{display:flex;justify-content:space-between;align-items:baseline}
+  .ranksub{font-size:10.5px;color:#8a98ac;font-weight:600}
+  .rankrow{display:grid;grid-template-columns:minmax(120px,1.4fr) 1fr auto;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid #eef2f7}
+  .rankname{font-size:12.5px;color:#22314a;font-weight:600;display:flex;align-items:center;gap:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rankno{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#eef2f9;color:#305496;font-size:10.5px;font-weight:800;flex:none}
+  .rankbarwrap{background:#f0f3f8;border-radius:6px;height:8px;overflow:hidden}
+  .rankbar{height:100%;border-radius:6px}
+  .rankamt{font-size:12.5px;font-weight:700;color:#1f3864;text-align:right;white-space:nowrap}
+  .rankamt.neg{color:#c0392b}
+  .ranktot{display:flex;justify-content:space-between;padding-top:8px;margin-top:4px;border-top:2px solid #d9e1ee;font-weight:800;color:#1f3864;font-size:13px}
+  .rankmore{font-size:11px;color:#8a98ac;padding:4px 0;font-style:italic}
+  .rankempty{font-size:12px;color:#8a98ac;padding:14px 0;font-style:italic;text-align:center}
+  @media(max-width:820px){.rankgrid{grid-template-columns:1fr}}
+  .kpi.near{border-top:3px solid #305496;background:linear-gradient(180deg,#eef3fc,#ffffff)}
+  .kpi.wk2{border-top:3px solid #4a76b8}
+  .kpi.wk3{border-top:3px solid #7a9bd0}
+  .kpi.near .nearrow{display:flex;gap:18px;margin-top:6px}
+  .kpi.near .nearrow3{gap:12px}
+  .kpi.near .nearrow3 .val.small{font-size:16px}
+  .kpi.near .nearcol{flex:1}
+  .kpi.near .nearwk{font-size:10.5px;color:#5a6b85;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px}
+  .kpi .val.small{font-size:19px}
+  .kpi.cao{border-top:3px solid #1f7a6d}
+  th.lblhead{white-space:nowrap}
+  .collapseallbtn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:5px;padding:2px 8px;font-size:10.5px;font-weight:700;cursor:pointer;white-space:nowrap;margin-left:8px}
+  .collapseallbtn:hover{background:rgba(255,255,255,.28)}
   tbody tr.item td.lbl .lblwrap{display:flex;align-items:center;gap:4px}
   .detailbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:2px 0 12px}
   .detailbtns{display:flex;gap:8px;flex-wrap:wrap}
@@ -144,6 +195,54 @@
   .pw-save{background:#1f3864;color:#fff;border-color:#1f3864}.pw-cancel{background:#fff;color:#305496}
   .pw-msg{min-height:16px;margin-top:10px;font-size:12px;font-weight:600}
   @media(max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  /* ===================== MOBILE ===================== */
+  @media(max-width:640px){
+    body{font-size:14px}
+    .wrap,.container,main{padding-left:12px !important;padding-right:12px !important}
+    h1{font-size:18px}
+    /* Tabs: horizontal scroll strip instead of wrap, so they stay one row and are swipeable */
+    .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:6px;padding:8px;scrollbar-width:thin}
+    .tabs::-webkit-scrollbar{height:5px}
+    .tabs::-webkit-scrollbar-thumb{background:#ffb84d;border-radius:3px}
+    .tab{flex:0 0 auto;font-size:13px;padding:9px 15px}
+    /* KPI tiles: 2 across, comfortable */
+    .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+    .kpi{padding:11px 12px}
+    .kpi .val{font-size:19px}
+    .kpi .lab{font-size:10px}
+    .kpi .note{font-size:10px}
+    /* Ranked panels stack */
+    .rankgrid{grid-template-columns:1fr;gap:10px}
+    .rankname{font-size:12px}
+    /* Startbar controls stack full width */
+    .startbar{gap:8px}
+    .startbar .field{flex:1 1 100%;justify-content:space-between}
+    .saverow{width:100%;justify-content:space-between}
+    /* Table: let it scroll horizontally; keep the line-label column visible while scrolling weeks */
+    .tablecard{margin-top:12px;border-radius:10px}
+    table{font-size:11px}
+    thead th{padding:6px 6px;font-size:9.5px}
+    tbody td{padding:4px 6px}
+    thead th.lblhead, tbody td.lbl{
+      position:sticky;left:0;z-index:2;
+      box-shadow:2px 0 4px rgba(0,0,0,.06)}
+    tbody td.lbl{background:inherit}
+    tbody tr{background:#fff}
+    tbody tr:nth-child(even){background:#f4f7fc}
+    thead th.lblhead{background:var(--navy);z-index:3}
+    /* inputs a touch bigger for finger taps */
+    tbody input{min-width:56px;font-size:11px;padding:3px 4px}
+    .panel{border-radius:10px}
+    .panel h3{font-size:13px;padding:10px 12px}
+    .chartwrap{padding:8px 8px 2px}
+    .legend{padding:0 12px 10px;font-size:11px}
+    /* login modal fits small screens */
+    .pw-card{width:92vw;max-width:340px}
+  }
+  @media(max-width:400px){
+    .kpis{grid-template-columns:1fr}
+    .kpi .val{font-size:20px}
+  }
 </style></head>
 <body>
 <div id="loginGate" class="login-gate"><div class="login-card">
@@ -171,10 +270,12 @@
     <div class="startbar">
       <div class="field"><label for="startDate">📅 Forecast start</label>
         <input type="date" id="startDate" value="2026-06-30">
-        <select id="weekStart"><option value="2">Weeks start Tue</option><option value="1">Mon</option><option value="0">Sun</option><option value="3">Wed</option></select>
-      </div>
+        </div>
       <div class="field"><label for="numWeeks">🗓 Weeks</label>
         <div class="stepper"><button type="button" id="wkMinus">−</button><input type="number" id="numWeeks" min="4" max="52" value="15"><button type="button" id="wkPlus">+</button></div>
+      </div>
+      <div class="field"><label>&nbsp;</label>
+        <div class="saverow"><span id="saveInd" class="saveind" title="Edits auto-save in this browser">✓ Saved</span><button type="button" id="resetSaved" class="resetbtn" title="Clear saved edits and reload the original workbook values">↺ Reset</button></div>
       </div>
     </div>
   </div>
@@ -211,7 +312,88 @@
 })();
 
 /* ---- data ---- */
-var D={"pneo": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Beginning Bank Balance", "vals": [167089.1, 86206.782, 70329.004, 48341.416, 44751.082800000004, 25826.88960000001, 11810.88440000001, 8274.018000000025, 13890.73760000003, 35448.037200000035, 33244.54560000004, 17929.31400000005, 29472.25440000005, -47671.38759999996, -41115.02959999996], "role": "begin"}, {"name": "Inbound Payments", "vals": [62949.682, 20825.682, 37343.542, 84574.6668, 17145.806800000006, 18648.994800000004, 178492.8036, 28781.719600000004, 57627.299600000006, 30461.508400000006, 66771.5084, 34707.9404, 38926.358, 60536.358, 42817.238000000005], "role": "inbound"}, {"name": "Accounts Receivable", "vals": [50214.75, 8090.75, 24104.75, 69547.47, 1614.75, 304.75, 157654.75, 2714.75, 104.75, 254.75, 36564.75, 1254.75, 104.75, 21714.75, 104.75], "role": "item"}, {"name": "ETFS Due", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Shusher Due", "vals": [12734.932000000003, 12734.932000000003, 13238.792000000001, 15027.196800000003, 15531.056800000004, 18344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 30206.758400000006, 30206.758400000006, 33453.1904, 38821.608, 38821.608, 42712.488000000005], "role": "item"}, {"name": "Outbound Payments", "vals": [143832.0, 32665.0, 47070.0, 23165.0, 36070.0, 32665.0, 108807.0, 23165.0, 36070.0, 32665.0, 76785.0, 23165.0, 36070.0, 53980.0, 87705.0], "role": "outbound"}, {"name": "Accounts Payable", "vals": [46000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0], "role": "item"}, {"name": "Rent Payments", "vals": [500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0], "role": "item"}, {"name": "Staffing", "vals": [320.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0], "role": "item"}, {"name": "Staff Benefits", "vals": [0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0], "role": "item"}, {"name": "Taxes Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Inventory", "vals": [97012.0, 0.0, 0.0, 0.0, 0.0, 0.0, 61737.0, 0.0, 21315.0, 0.0, 29715.0, 0.0, 0.0, 21315.0, 40635.0], "role": "item"}, {"name": "Lending Activity", "vals": [0.0, -4038.46, -12261.130000000001, -65000.0, 0.0, 0.0, -73222.67, 0.0, 0.0, 0.0, -5301.74, 0.0, -80000.0, 0.0, 0.0], "role": "lending"}, {"name": "Loans Drawn", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Loans Paid", "vals": [0.0, 4038.46, 12261.130000000001, 0.0, 0.0, 0.0, 8222.67, 0.0, 0.0, 0.0, 5301.74, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Credit Cards Paid", "vals": [0, 0, 0, -65000.0, 0.0, 0, -65000.0, 0.0, 0, 0, 0, 0, -80000.0, 0, 0], "role": "item"}, {"name": "Vehicle Loans Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Ending Bank Balance", "vals": [86206.782, 70329.004, 48341.416, 44751.082800000004, 25826.88960000001, 11810.88440000001, 8274.018000000025, 13890.73760000003, 35448.037200000035, 33244.54560000004, 17929.31400000005, 29472.25440000005, -47671.38759999996, -41115.02959999996, -86002.79159999995], "role": "ending"}, {"name": "Funds from Lending Available", "vals": [135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5], "role": "info"}, {"name": "Texas LOC Available", "vals": [250000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "info"}, {"name": "Credit Card AMOUNT DUE", "vals": [-178458.35, 0, 0, 0, 0, 0, -60000.0, 0, 0, 0, -55891.78, 0, 0, 0, -55891.78], "role": "info"}, {"name": "AMEX RUNNING BALANCE", "vals": [-178458.35, -178458.35, -178458.35, -113458.35, -113458.35, -113458.35, -108458.35, -108458.35, -108458.35, -108458.35, -164350.13, -164350.13, -84350.13, -84350.13, -140241.91], "role": "info"}]}, "shusher": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Beginning Bank Balance", "vals": [36415.59, 39359.323, 32543.055999999997, 35852.754, 37109.553199999995, 40752.31739999999, 35338.3786, 40547.89199999999, 47064.63439999999, 23945.27179999998, 16256.961399999978, 18808.650999999976, 22171.948599999974, 26877.350599999983, 11342.752599999985], "role": "begin"}, {"name": "Accounts Receivable", "vals": [15918.665000000003, 15918.665000000003, 16548.49, 18783.996000000003, 19413.821000000004, 22930.306000000004, 26047.567000000003, 32583.712000000003, 34403.187000000005, 37758.448000000004, 37758.448000000004, 41816.488, 48527.01, 48527.01, 53390.61], "role": "item"}, {"name": "Outbound Payments", "vals": [12734.932000000003, 22734.932, 13238.792000000001, 17527.196800000005, 15531.056800000004, 28344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 45206.758400000006, 35206.758400000006, 38453.1904, 43821.608, 63821.608, 57712.488000000005], "role": "outbound"}, {"name": "Accounts Payable", "vals": [12734.932000000003, 22734.932, 13238.792000000001, 17527.196800000005, 15531.056800000004, 28344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 45206.758400000006, 35206.758400000006, 38453.1904, 43821.608, 63821.608, 57712.488000000005], "role": "item"}, {"name": "Lending Activity", "vals": [-240.0, 0.0, 0.0, 0.0, -240.0, 0.0, 0.0, 0.0, 0.0, -240.0, 0.0, 0.0, 0.0, -240.0, 0.0], "role": "lending"}, {"name": "Loans Drawn", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Intercompany", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Credit Cards Paid", "vals": [240.0, 0, 0, 0, 240.0, 0, 0, 0, 0, 240.0, 0, 0, 0, 240.0, 0], "role": "item"}, {"name": "Vehicle Loans Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Ending Bank Balance", "vals": [39359.323, 32543.055999999997, 35852.754, 37109.553199999995, 40752.31739999999, 35338.3786, 40547.89199999999, 47064.63439999999, 23945.27179999998, 16256.961399999978, 18808.650999999976, 22171.948599999974, 26877.350599999983, 11342.752599999985, 7020.874599999981], "role": "ending"}, {"name": "Texas LOC Available", "vals": [250000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "info"}]}, "one20": {"dates": ["3/27/26", "4/3/26", "4/10/26", "4/17/26", "4/24/26", "5/1/26", "5/8/26", "5/15/26", "5/22/26", "5/29/26", "6/5/26", "6/12/26", "6/19/26", "6/26/26", "7/3/26"], "rows": [{"name": "Beginning Bank Balance", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "begin"}, {"name": "Inbound Payments", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "inbound"}, {"name": "Accounts Receivable", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Outbound Payments", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "outbound"}, {"name": "Accounts Payable", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Transfer to Pneo", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Lending Activity", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "lending"}, {"name": "Loans Drawn", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Loans Paid", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Credit Cards Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Vehicle Loans Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Ending Bank Balance", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "ending"}, {"name": "Texas LOC Available", "vals": [250000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "info"}]}, "ar": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Total (pNeo)", "vals": [50214.75, 8090.75, 24104.75, 69547.47, 1614.75, 304.75, 157654.75, 2714.75, 104.75, 254.75, 36564.75, 1254.75, 104.75, 21714.75, 104.75], "total": true}, {"name": "Target", "vals": [0, 0, 0, 0, 0, 0, 0, 1000.0, 0.0, 0.0, 0.0, 1000.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Target Deductions", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Luminize", "vals": [50000.0, 0.0, 24000.0, 53962.72, 0.0, 0, 150000.0, 0, 0.0, 0, 20000.0, 0, 0, 20000.0, 0], "total": false}, {"name": "Baby List", "vals": [0, 6376.0, 0, 15330.0, 0, 0, 7500.0, 0, 0, 0, 15000.0, 0, 0, 0, 0], "total": false}, {"name": "Faire.com", "vals": [0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0], "total": false}, {"name": "iHerb", "vals": [0.0, 1460.0, 0.0, 0.0, 1460.0, 0.0, 0.0, 1460.0, 0.0, 0.0, 1460.0, 0.0, 0.0, 1460.0, 0.0], "total": false}, {"name": "Hospitals", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Kohls / BRU", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "The TJX Companies, Inc", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Walmart", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Williams Sonoma", "vals": [54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75], "total": false}, {"name": "Fulfillment Services Inc, (FSI)", "vals": [160.0, 50.0, 50.0, 50.0, 100.0, 100.0, 100.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0], "total": false}, {"name": "Others", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "ETFS DUE", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "SHUSHER CORP DUE", "vals": [12734.932000000003, 12734.932000000003, 13238.792000000001, 15027.196800000003, 15531.056800000004, 18344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 30206.758400000006, 30206.758400000006, 33453.1904, 38821.608, 38821.608, 42712.488000000005], "total": false}, {"name": "Total (Shusher)", "vals": [15918.665000000003, 15918.665000000003, 16548.49, 18783.996000000003, 19413.821000000004, 22930.306000000004, 26047.567000000003, 32583.712000000003, 34403.187000000005, 37758.448000000004, 37758.448000000004, 41816.488, 48527.01, 48527.01, 53390.61], "total": true}, {"name": "Amazon Payout (SH CO)", "vals": [7890.260000000002, 7890.260000000002, 8520.085000000001, 9149.910000000002, 9779.735, 13296.220000000001, 14807.800000000003, 21343.945000000003, 23163.420000000002, 24913.000000000004, 24913.000000000004, 28971.04, 32470.2, 32470.2, 37333.8], "total": false}, {"name": "TikTok / Shopify Sales", "vals": [8028.405000000001, 8028.405000000001, 8028.405000000001, 9634.086000000001, 9634.086000000001, 9634.086000000001, 11239.767, 11239.767, 11239.767, 12845.448, 12845.448, 12845.448, 16056.810000000001, 16056.810000000001, 16056.810000000001], "total": false}, {"name": "Apps", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Distributors", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Australia/New Zealand", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "UK", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Korea", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Japan", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Canada", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "UAE", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}]}, "ap": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Total (pNeo)", "vals": [46000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0], "total": true}, {"name": "Insurance", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Gusto Subscription", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "UL Payment", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Freight", "vals": [15000.0, 0, 0, 0, 0, 0, 0, 0, 35000.0, 0, 0, 0, 0, 0, 30000.0], "total": false}, {"name": "Luminize", "vals": [31000.0, 0, 40000.0, 0, 30000.0, 0.0, 0, 30000.0, 0, 0, 25000.0, 0, 0, 0, 20000.0], "total": false}, {"name": "Deliverzen", "vals": [0.0, 5000.0, 5000.0, 4000.0, 4000.0, 3000.0, 3000.0, 2000.0, 2000.0, 2000.0, 2000.0, 2000.0, 1000.0, 1000.0, 1000.0], "total": false}, {"name": "LOAN & LOC PAYMENTS", "vals": [0.0, 4038.46, 12261.130000000001, 0.0, 0.0, 0.0, 8222.67, 0.0, 0.0, 0.0, 5301.74, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "NEW AMEX LOC", "vals": [0.0, 0.0, 8222.67, 0.0, 0.0, 0.0, 8222.67, 0.0, 0.0, 0.0, 5301.74, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "NEW LOC", "vals": [0.0, 4038.46, 4038.46, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Intercompany Loan", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "One 20", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Wenham", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "BofA LOC", "vals": [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Rent Payments", "vals": [500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0], "total": false}, {"name": "R&D Rent", "vals": [500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0], "total": false}, {"name": "Total (SH CO)", "vals": [12734.932000000003, 22734.932, 13238.792000000001, 17527.196800000005, 15531.056800000004, 28344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 45206.758400000006, 35206.758400000006, 38453.1904, 43821.608, 63821.608, 57712.488000000005], "total": true}, {"name": "pNeo Payments", "vals": [12734.932000000003, 12734.932000000003, 13238.792000000001, 15027.196800000003, 15531.056800000004, 18344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 35206.758400000006, 35206.758400000006, 38453.1904, 43821.608, 63821.608, 47712.488000000005], "total": false}, {"name": "Shopify", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Ifan (App)", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Trade Show", "vals": [0, 0, 0, 2500.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Wenham repay", "vals": [0.0, 10000.0, 0.0, 0.0, 0.0, 10000.0, 0.0, 0.0, 0.0, 10000.0, 0.0, 0.0, 0.0, 0.0, 10000.0], "total": false}, {"name": "Total (One 20)", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": true}, {"name": "Comerica", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Other AP", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Insurance", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Utilities", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Insurances - pNeo", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Umbrella - 1st of Month", "vals": [247.38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "NGIC - last of month", "vals": [106.55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Vehicles - 7th of month", "vals": [895.58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "AMEX LOC new #1 - 10th of Month", "vals": [1907.63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Heritage Premium - 5th of Month", "vals": [1805.45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "IQumulate Premium", "vals": [1800.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}]}, "staffing": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Total", "vals": [320.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0], "total": true}, {"name": "W2", "vals": [0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0], "total": false}, {"name": "David Suk", "vals": [0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0], "total": false}, {"name": "Ron Rubis", "vals": [0.0, 1600.0, 0, 0, 0.0, 1600.0, 0.0, 0.0, 0.0, 1600.0, 0.0, 0.0, 0.0, 1600.0, 0.0], "total": false}, {"name": "Geona", "vals": [0.0, 1600.0, 0.0, 0, 0.0, 1600.0, 0.0, 0.0, 0.0, 1600.0, 0.0, 0.0, 0.0, 1600.0, 0.0], "total": false}, {"name": "Upwork", "vals": [320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0], "total": false}, {"name": "Accounting", "vals": [0.0, 2000.0, 0.0, 0.0, 0.0, 2000.0, 0.0, 0.0, 0.0, 2000.0, 0.0, 0.0, 0.0, 2000.0, 0.0], "total": false}, {"name": "Doug", "vals": [0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0], "total": false}, {"name": "CFO", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Staff Benefits (subtotal)", "vals": [0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0], "total": true, "subgroup": "benefits"}, {"name": "Med Benefits", "vals": [0.0, 3300.0, 0.0, 0.0, 0.0, 3300.0, 0.0, 0.0, 0.0, 3300.0, 0.0, 0.0, 0.0, 3300.0, 0.0], "total": false}, {"name": "Workers Comp", "vals": [0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0], "total": false}, {"name": "401(k) Payments", "vals": [0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0], "total": false}]}, "bank": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "All Bank Accounts", "vals": [203504.69, 102872.06, 84194.17, 87700.739, 77294.1388, 61679.64360000001, 48920.437600000005, 49026.33540000002, 49229.116200000026, 75995.92920000003, 80309.18000000002, 41874.58580000003, 45729.21580000003, -28862.736599999982, -18943.080999999984], "kind": "grand", "entity": null}, {"name": "pNeo", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "entity", "entity": "pNeo"}, {"name": "Bank Accounts", "vals": [167089.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "subtotal", "entity": "pNeo"}, {"name": "BoA 1944", "vals": [123335.19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "BoA 1005", "vals": [7339.72, 0, 0, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "Comerica", "vals": [1300.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "Texas Security Bank", "vals": [34409.16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "TSB Payroll", "vals": [705.03, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "Shusher", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "entity", "entity": "Shusher"}, {"name": "Bank Accounts", "vals": [36415.59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "subtotal", "entity": "Shusher"}, {"name": "BoA", "vals": [36415.59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "Shusher"}, {"name": "TSB", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "Shusher"}, {"name": "TSB LOC", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "Shusher"}, {"name": "Texas Security Bank", "vals": [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "Shusher"}, {"name": "One 20", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "entity", "entity": "One 20"}, {"name": "Bank Accounts", "vals": [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "subtotal", "entity": "One 20"}, {"name": "BoA", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "One 20"}, {"name": "Comerica", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "One 20"}, {"name": "Texas Security Bank", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "One 20"}], "grouped": true}, "loans": [{"lender": "Millstone", "balance": 0.0, "limit": 0, "available": 0}, {"lender": "B of A", "balance": 46184.13, "limit": 50000.0, "available": 3815.8700000000026}, {"lender": "AMEX LOC", "balance": 68668.37, "limit": 200000.0, "available": 131331.63}, {"lender": "TSB", "balance": 279452.76, "limit": 279452.76, "available": 0.0}, {"lender": "B of A", "balance": 0.0, "limit": 25000.0, "available": 25000.0}, {"lender": "Wenham", "balance": 90000.0, "limit": 0, "available": 0}, {"lender": "Wenham", "balance": 65000.0, "limit": 0, "available": 0}, {"lender": "Wenham", "balance": 40000.0, "limit": 0, "available": 0}, {"lender": "Wenham", "balance": 30000.0, "limit": 0, "available": 0}]};
+var D={"pneo": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Beginning Bank Balance", "vals": [167089.1, 86206.782, 70329.004, 48341.416, 44751.082800000004, 25826.88960000001, 11810.88440000001, 8274.018000000025, 13890.73760000003, 35448.037200000035, 33244.54560000004, 17929.31400000005, 29472.25440000005, -47671.38759999996, -41115.02959999996], "role": "begin"}, {"name": "Inbound Payments", "vals": [62949.682, 20825.682, 37343.542, 84574.6668, 17145.806800000006, 18648.994800000004, 178492.8036, 28781.719600000004, 57627.299600000006, 30461.508400000006, 66771.5084, 34707.9404, 38926.358, 60536.358, 42817.238000000005], "role": "inbound"}, {"name": "Accounts Receivable", "vals": [50214.75, 8090.75, 24104.75, 69547.47, 1614.75, 304.75, 157654.75, 2714.75, 104.75, 254.75, 36564.75, 1254.75, 104.75, 21714.75, 104.75], "role": "item"}, {"name": "ETFS Due", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Shusher Due", "vals": [12734.932000000003, 12734.932000000003, 13238.792000000001, 15027.196800000003, 15531.056800000004, 18344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 30206.758400000006, 30206.758400000006, 33453.1904, 38821.608, 38821.608, 42712.488000000005], "role": "item"}, {"name": "Outbound Payments", "vals": [143832.0, 32665.0, 47070.0, 23165.0, 36070.0, 32665.0, 108807.0, 23165.0, 36070.0, 32665.0, 76785.0, 23165.0, 36070.0, 53980.0, 87705.0], "role": "outbound"}, {"name": "Accounts Payable", "vals": [46000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0], "role": "item"}, {"name": "Rent Payments", "vals": [500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0], "role": "item"}, {"name": "Staffing", "vals": [320.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0], "role": "item"}, {"name": "Staff Benefits", "vals": [0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0], "role": "item"}, {"name": "Taxes Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Inventory", "vals": [97012.0, 0.0, 0.0, 0.0, 0.0, 0.0, 61737.0, 0.0, 21315.0, 0.0, 29715.0, 0.0, 0.0, 21315.0, 40635.0], "role": "item"}, {"name": "Lending Activity", "vals": [0.0, -4038.46, -12261.130000000001, -65000.0, 0.0, 0.0, -73222.67, 0.0, 0.0, 0.0, -5301.74, 0.0, -80000.0, 0.0, 0.0], "role": "lending"}, {"name": "Loans Drawn - AMEX", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item", "drawsrc": "amex"}, {"name": "Loans Drawn - Texas LOC", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item", "drawsrc": "texas"}, {"name": "Loans Paid", "vals": [0.0, 4038.46, 12261.130000000001, 0.0, 0.0, 0.0, 8222.67, 0.0, 0.0, 0.0, 5301.74, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Credit Cards Paid", "vals": [0, 0, 0, -65000.0, 0.0, 0, -65000.0, 0.0, 0, 0, 0, 0, -80000.0, 0, 0], "role": "item"}, {"name": "Vehicle Loans Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Ending Bank Balance", "vals": [86206.782, 70329.004, 48341.416, 44751.082800000004, 25826.88960000001, 11810.88440000001, 8274.018000000025, 13890.73760000003, 35448.037200000035, 33244.54560000004, 17929.31400000005, 29472.25440000005, -47671.38759999996, -41115.02959999996, -86002.79159999995], "role": "ending"}, {"name": "Funds from Lending Available", "vals": [135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5, 135147.5], "role": "info"}, {"name": "Texas LOC Available", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "info"}, {"name": "Credit Card AMOUNT DUE", "vals": [-178458.35, 0, 0, 0, 0, 0, -60000.0, 0, 0, 0, -55891.78, 0, 0, 0, -55891.78], "role": "info"}, {"name": "AMEX RUNNING BALANCE", "vals": [-178458.35, -178458.35, -178458.35, -113458.35, -113458.35, -113458.35, -108458.35, -108458.35, -108458.35, -108458.35, -164350.13, -164350.13, -84350.13, -84350.13, -140241.91], "role": "info"}]}, "shusher": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Beginning Bank Balance", "vals": [36415.59, 39359.323, 32543.055999999997, 35852.754, 37109.553199999995, 40752.31739999999, 35338.3786, 40547.89199999999, 47064.63439999999, 23945.27179999998, 16256.961399999978, 18808.650999999976, 22171.948599999974, 26877.350599999983, 11342.752599999985], "role": "begin"}, {"name": "Accounts Receivable", "vals": [15918.665000000003, 15918.665000000003, 16548.49, 18783.996000000003, 19413.821000000004, 22930.306000000004, 26047.567000000003, 32583.712000000003, 34403.187000000005, 37758.448000000004, 37758.448000000004, 41816.488, 48527.01, 48527.01, 53390.61], "role": "item"}, {"name": "Outbound Payments", "vals": [12734.932000000003, 22734.932, 13238.792000000001, 17527.196800000005, 15531.056800000004, 28344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 45206.758400000006, 35206.758400000006, 38453.1904, 43821.608, 63821.608, 57712.488000000005], "role": "outbound"}, {"name": "Accounts Payable", "vals": [12734.932000000003, 22734.932, 13238.792000000001, 17527.196800000005, 15531.056800000004, 28344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 45206.758400000006, 35206.758400000006, 38453.1904, 43821.608, 63821.608, 57712.488000000005], "role": "item"}, {"name": "Lending Activity", "vals": [-240.0, 0.0, 0.0, 0.0, -240.0, 0.0, 0.0, 0.0, 0.0, -240.0, 0.0, 0.0, 0.0, -240.0, 0.0], "role": "lending"}, {"name": "Loans Drawn - AMEX", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item", "drawsrc": "amex"}, {"name": "Loans Drawn - Texas LOC", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item", "drawsrc": "texas"}, {"name": "Intercompany", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Credit Cards Paid", "vals": [240.0, 0, 0, 0, 240.0, 0, 0, 0, 0, 240.0, 0, 0, 0, 240.0, 0], "role": "item"}, {"name": "Vehicle Loans Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Ending Bank Balance", "vals": [39359.323, 32543.055999999997, 35852.754, 37109.553199999995, 40752.31739999999, 35338.3786, 40547.89199999999, 47064.63439999999, 23945.27179999998, 16256.961399999978, 18808.650999999976, 22171.948599999974, 26877.350599999983, 11342.752599999985, 7020.874599999981], "role": "ending"}, {"name": "Texas LOC Available", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "info"}]}, "one20": {"dates": ["3/27/26", "4/3/26", "4/10/26", "4/17/26", "4/24/26", "5/1/26", "5/8/26", "5/15/26", "5/22/26", "5/29/26", "6/5/26", "6/12/26", "6/19/26", "6/26/26", "7/3/26"], "rows": [{"name": "Beginning Bank Balance", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "begin"}, {"name": "Inbound Payments", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "inbound"}, {"name": "Accounts Receivable", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Outbound Payments", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "outbound"}, {"name": "Accounts Payable", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Transfer to Pneo", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Lending Activity", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "lending"}, {"name": "Loans Drawn - AMEX", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item", "drawsrc": "amex"}, {"name": "Loans Drawn - Texas LOC", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item", "drawsrc": "texas"}, {"name": "Loans Paid", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "item"}, {"name": "Credit Cards Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Vehicle Loans Paid", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "role": "item"}, {"name": "Ending Bank Balance", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "ending"}, {"name": "Texas LOC Available", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "role": "info"}]}, "ar": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Total (pNeo)", "vals": [50214.75, 8090.75, 24104.75, 69547.47, 1614.75, 304.75, 157654.75, 2714.75, 104.75, 254.75, 36564.75, 1254.75, 104.75, 21714.75, 104.75], "total": true}, {"name": "Target", "vals": [0, 0, 0, 0, 0, 0, 0, 1000.0, 0.0, 0.0, 0.0, 1000.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Target Deductions", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Luminize", "vals": [50000.0, 0.0, 24000.0, 53962.72, 0.0, 0, 150000.0, 0, 0.0, 0, 20000.0, 0, 0, 20000.0, 0], "total": false}, {"name": "Baby List", "vals": [0, 6376.0, 0, 15330.0, 0, 0, 7500.0, 0, 0, 0, 15000.0, 0, 0, 0, 0], "total": false}, {"name": "Faire.com", "vals": [0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0, 150.0, 0.0], "total": false}, {"name": "iHerb", "vals": [0.0, 1460.0, 0.0, 0.0, 1460.0, 0.0, 0.0, 1460.0, 0.0, 0.0, 1460.0, 0.0, 0.0, 1460.0, 0.0], "total": false}, {"name": "Hospitals", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Kohls / BRU", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "The TJX Companies, Inc", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Walmart", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Williams Sonoma", "vals": [54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75, 54.75], "total": false}, {"name": "Fulfillment Services Inc, (FSI)", "vals": [160.0, 50.0, 50.0, 50.0, 100.0, 100.0, 100.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0], "total": false}, {"name": "Others", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "ETFS DUE", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "SHUSHER CORP DUE", "vals": [12734.932000000003, 12734.932000000003, 13238.792000000001, 15027.196800000003, 15531.056800000004, 18344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 30206.758400000006, 30206.758400000006, 33453.1904, 38821.608, 38821.608, 42712.488000000005], "total": false}, {"name": "Total (Shusher)", "vals": [15918.665000000003, 15918.665000000003, 16548.49, 18783.996000000003, 19413.821000000004, 22930.306000000004, 26047.567000000003, 32583.712000000003, 34403.187000000005, 37758.448000000004, 37758.448000000004, 41816.488, 48527.01, 48527.01, 53390.61], "total": true}, {"name": "Amazon Payout (SH CO)", "vals": [7890.260000000002, 7890.260000000002, 8520.085000000001, 9149.910000000002, 9779.735, 13296.220000000001, 14807.800000000003, 21343.945000000003, 23163.420000000002, 24913.000000000004, 24913.000000000004, 28971.04, 32470.2, 32470.2, 37333.8], "total": false}, {"name": "TikTok / Shopify Sales", "vals": [8028.405000000001, 8028.405000000001, 8028.405000000001, 9634.086000000001, 9634.086000000001, 9634.086000000001, 11239.767, 11239.767, 11239.767, 12845.448, 12845.448, 12845.448, 16056.810000000001, 16056.810000000001, 16056.810000000001], "total": false}, {"name": "Apps", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Distributors", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Australia/New Zealand", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "UK", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Korea", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Japan", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Canada", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "UAE", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}]}, "ap": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Total (pNeo)", "vals": [46000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0, 4000.0, 34000.0, 5000.0, 45000.0], "total": true}, {"name": "Insurance", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Gusto Subscription", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "UL Payment", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Freight", "vals": [15000.0, 0, 0, 0, 0, 0, 0, 0, 35000.0, 0, 0, 0, 0, 0, 30000.0], "total": false}, {"name": "Luminize", "vals": [31000.0, 0, 40000.0, 0, 30000.0, 0.0, 0, 30000.0, 0, 0, 25000.0, 0, 0, 0, 20000.0], "total": false}, {"name": "Deliverzen", "vals": [0.0, 5000.0, 5000.0, 4000.0, 4000.0, 3000.0, 3000.0, 2000.0, 2000.0, 2000.0, 2000.0, 2000.0, 1000.0, 1000.0, 1000.0], "total": false}, {"name": "LOAN & LOC PAYMENTS", "vals": [0.0, 4038.46, 12261.130000000001, 0.0, 0.0, 0.0, 8222.67, 0.0, 0.0, 0.0, 5301.74, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "NEW AMEX LOC", "vals": [0.0, 0.0, 8222.67, 0.0, 0.0, 0.0, 8222.67, 0.0, 0.0, 0.0, 5301.74, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "NEW LOC", "vals": [0.0, 4038.46, 4038.46, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Intercompany Loan", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "One 20", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Wenham", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "BofA LOC", "vals": [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Rent Payments", "vals": [500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0], "total": false}, {"name": "R&D Rent", "vals": [500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0], "total": false}, {"name": "Total (SH CO)", "vals": [12734.932000000003, 22734.932, 13238.792000000001, 17527.196800000005, 15531.056800000004, 28344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 45206.758400000006, 35206.758400000006, 38453.1904, 43821.608, 63821.608, 57712.488000000005], "total": true}, {"name": "pNeo Payments", "vals": [12734.932000000003, 12734.932000000003, 13238.792000000001, 15027.196800000003, 15531.056800000004, 18344.244800000004, 20838.053600000003, 26066.969600000004, 57522.549600000006, 35206.758400000006, 35206.758400000006, 38453.1904, 43821.608, 63821.608, 47712.488000000005], "total": false}, {"name": "Shopify", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Ifan (App)", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Trade Show", "vals": [0, 0, 0, 2500.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Wenham repay", "vals": [0.0, 10000.0, 0.0, 0.0, 0.0, 10000.0, 0.0, 0.0, 0.0, 10000.0, 0.0, 0.0, 0.0, 0.0, 10000.0], "total": false}, {"name": "Total (One 20)", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": true}, {"name": "Comerica", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Other AP", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Insurance", "vals": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "total": false}, {"name": "Utilities", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Insurances - pNeo", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Umbrella - 1st of Month", "vals": [247.38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "NGIC - last of month", "vals": [106.55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Vehicles - 7th of month", "vals": [895.58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "AMEX LOC new #1 - 10th of Month", "vals": [1907.63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "Heritage Premium - 5th of Month", "vals": [1805.45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}, {"name": "IQumulate Premium", "vals": [1800.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "total": false}]}, "staffing": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "Total", "vals": [320.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0, 18570.0, 1570.0, 23770.0, 1570.0], "total": true}, {"name": "W2", "vals": [0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0, 15000.0, 0.0], "total": false}, {"name": "David Suk", "vals": [0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0, 2000.0, 0.0], "total": false}, {"name": "Ron Rubis", "vals": [0.0, 1600.0, 0, 0, 0.0, 1600.0, 0.0, 0.0, 0.0, 1600.0, 0.0, 0.0, 0.0, 1600.0, 0.0], "total": false}, {"name": "Geona", "vals": [0.0, 1600.0, 0.0, 0, 0.0, 1600.0, 0.0, 0.0, 0.0, 1600.0, 0.0, 0.0, 0.0, 1600.0, 0.0], "total": false}, {"name": "Upwork", "vals": [320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0], "total": false}, {"name": "Accounting", "vals": [0.0, 2000.0, 0.0, 0.0, 0.0, 2000.0, 0.0, 0.0, 0.0, 2000.0, 0.0, 0.0, 0.0, 2000.0, 0.0], "total": false}, {"name": "Doug", "vals": [0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0, 1250.0], "total": false}, {"name": "CFO", "vals": [950.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0, 300.0], "total": false}, {"name": "Staff Benefits (subtotal)", "vals": [0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0, 95.0, 0.0, 3395.0, 0.0], "total": true, "subgroup": "benefits"}, {"name": "Med Benefits", "vals": [0.0, 3300.0, 0.0, 0.0, 0.0, 3300.0, 0.0, 0.0, 0.0, 3300.0, 0.0, 0.0, 0.0, 3300.0, 0.0], "total": false}, {"name": "Workers Comp", "vals": [0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0, 15.0, 0.0], "total": false}, {"name": "401(k) Payments", "vals": [0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0, 80.0, 0.0], "total": false}]}, "bank": {"dates": ["6/30/26", "7/7/26", "7/14/26", "7/21/26", "7/28/26", "8/4/26", "8/11/26", "8/18/26", "8/25/26", "9/1/26", "9/8/26", "9/15/26", "9/22/26", "9/29/26", "10/6/26"], "rows": [{"name": "All Bank Accounts", "vals": [203504.69, 102872.06, 84194.17, 87700.739, 77294.1388, 61679.64360000001, 48920.437600000005, 49026.33540000002, 49229.116200000026, 75995.92920000003, 80309.18000000002, 41874.58580000003, 45729.21580000003, -28862.736599999982, -18943.080999999984], "kind": "grand", "entity": null}, {"name": "pNeo", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "entity", "entity": "pNeo"}, {"name": "Bank Accounts", "vals": [167089.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "subtotal", "entity": "pNeo"}, {"name": "BoA 1944", "vals": [123335.19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "BoA 1005", "vals": [7339.72, 0, 0, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "Comerica", "vals": [1300.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "Texas Security Bank", "vals": [34409.16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "TSB Payroll", "vals": [705.03, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "pNeo"}, {"name": "Shusher", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "entity", "entity": "Shusher"}, {"name": "Bank Accounts", "vals": [36415.59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "subtotal", "entity": "Shusher"}, {"name": "BoA", "vals": [36415.59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "Shusher"}, {"name": "TSB", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "Shusher"}, {"name": "TSB LOC", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "Shusher"}, {"name": "Texas Security Bank", "vals": [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "Shusher"}, {"name": "One 20", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "entity", "entity": "One 20"}, {"name": "Bank Accounts", "vals": [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "subtotal", "entity": "One 20"}, {"name": "BoA", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "One 20"}, {"name": "Comerica", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "One 20"}, {"name": "Texas Security Bank", "vals": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "kind": "account", "entity": "One 20"}], "grouped": true}, "loans": [{"lender": "Millstone", "balance": 0.0, "limit": 0, "available": 0}, {"lender": "B of A", "balance": 46184.13, "limit": 50000.0, "available": 3815.8700000000026}, {"lender": "AMEX LOC", "balance": 68668.37, "limit": 200000.0, "available": 131331.63}, {"lender": "TSB", "balance": 279452.76, "limit": 279452.76, "available": 0.0}, {"lender": "B of A", "balance": 0.0, "limit": 25000.0, "available": 25000.0}, {"lender": "Wenham", "balance": 90000.0, "limit": 0, "available": 0}, {"lender": "Wenham", "balance": 65000.0, "limit": 0, "available": 0}, {"lender": "Wenham", "balance": 40000.0, "limit": 0, "available": 0}, {"lender": "Wenham", "balance": 30000.0, "limit": 0, "available": 0}]};
+// ===== AUTO-SAVE (persists edits in the browser so the published page keeps your changes) =====
+var SAVE_KEY='pneo_cf_data_v1';
+var __storageOK=true;
+function saveState(){
+  var ind=document.getElementById('saveInd');
+  try{
+    var payload={rows:{},meta:{}};
+    Object.keys(D).forEach(function(k){
+      if(D[k]&&D[k].rows){payload.rows[k]=D[k].rows;}
+    });
+    payload.meta.numWeeks=(typeof N!=='undefined')?N:15;
+    var sd=document.getElementById('startDate'); if(sd)payload.meta.startDate=sd.value;
+    var wsv=document.getElementById('weekStart'); if(wsv)payload.meta.weekStart=wsv.value;
+    if(typeof bankActual!=='undefined')payload.meta.bankActual=bankActual;
+    localStorage.setItem(SAVE_KEY,JSON.stringify(payload));
+    __storageOK=true;
+    if(ind){ind.textContent='✓ Saved';ind.style.color='#1f7a6d';ind.style.opacity='1';setTimeout(function(){ind.style.opacity='.45';},1200);}
+  }catch(e){
+    __storageOK=false;
+    // Browsers block localStorage on file:// (opaque origin). Warn once so you know to publish/serve it.
+    if(ind){ind.textContent='⚠ Not saved (open via a web address, not a local file)';ind.style.color='#b23';ind.style.opacity='1';}
+  }
+}
+function loadState(){
+  try{
+    var raw=localStorage.getItem(SAVE_KEY); if(!raw)return false;
+    var payload=JSON.parse(raw); if(!payload||!payload.rows)return false;
+    Object.keys(payload.rows).forEach(function(k){ if(D[k])D[k].rows=payload.rows[k]; });
+    if(payload.meta){
+      if(payload.meta.startDate){var sd=document.getElementById('startDate');if(sd)sd.value=payload.meta.startDate;}
+      if(payload.meta.weekStart){var wsv=document.getElementById('weekStart');if(wsv)wsv.value=payload.meta.weekStart;}
+      if(payload.meta.numWeeks){var nw=document.getElementById('numWeeks');if(nw)nw.value=payload.meta.numWeeks;}
+    }
+    return true;
+  }catch(e){return false;}
+}
+window.saveState=saveState;
+// ===== UNDO (Ctrl+Z) =====
+var __undoStack=[]; var __undoMax=60; var __undoPending=false;
+function snapshotRows(){
+  var snap={};
+  Object.keys(D).forEach(function(k){ if(D[k]&&D[k].rows){snap[k]=JSON.parse(JSON.stringify(D[k].rows));} });
+  return snap;
+}
+function pushUndo(){
+  try{ __undoStack.push(snapshotRows()); if(__undoStack.length>__undoMax)__undoStack.shift(); }catch(e){}
+}
+window.pushUndo=pushUndo;
+// Capture a snapshot BEFORE an edit begins (debounced so a burst of keystrokes = one undo step).
+function markUndoPoint(){ if(!__undoPending){pushUndo();__undoPending=true;setTimeout(function(){__undoPending=false;},500);} }
+window.markUndoPoint=markUndoPoint;
+function doUndo(){
+  if(!__undoStack.length)return;
+  var snap=__undoStack.pop();
+  Object.keys(snap).forEach(function(k){ if(D[k])D[k].rows=snap[k]; });
+  // recompute everything and re-render current view
+  ['pneo','shusher','one20'].forEach(function(k){ if(D[k]&&D[k].rows)recompute(k); });
+  ['ar','ap','staffing'].forEach(function(k){ if(D[k]&&D[k].rows)recomputeDetail(k); });
+  if(typeof applyLinks==='function')applyLinks();
+  if(typeof current!=='undefined'&&current)renderView(current);
+  if(typeof saveState==='function')saveState();
+}
+window.doUndo=doUndo;
+document.addEventListener('keydown',function(e){
+  var z=(e.key==='z'||e.key==='Z');
+  if((e.ctrlKey||e.metaKey)&&z&&!e.shiftKey){
+    var tgt=e.target;
+    // let native undo work inside a focused text input mid-typing; our undo applies to committed cell values
+    e.preventDefault(); doUndo();
+  }
+});
+// Debounced auto-save on any edit anywhere in the tool
+var __saveTimer=null;
+function scheduleSave(){ if(__saveTimer)clearTimeout(__saveTimer); __saveTimer=setTimeout(saveState,400); }
+window.scheduleSave=scheduleSave;
+document.addEventListener('input',function(e){ if(e.target && e.target.closest && e.target.closest('#views,#startDate,.startbar')){scheduleSave();} },true);
+document.addEventListener('change',function(e){ if(e.target && e.target.closest && e.target.closest('#views,.startbar')){scheduleSave();} },true);
+// Snapshot for undo at the START of each cell edit (one undo step per field entered)
+document.addEventListener('focusin',function(e){
+  if(e.target && e.target.tagName==='INPUT' && e.target.closest && e.target.closest('#views')){ pushUndo(); }
+},true);
 // Inject a "Bank Balance Adjustment" row into each summary (after Ending Bank Balance).
 (function(){
   ['pneo','shusher','one20'].forEach(function(k){
@@ -240,6 +422,7 @@ var LINKS=[
   {sheet:'ar',       summary:'pneo',    line:'Shusher Due',         src:'shusher corp due'},
   {sheet:'ap',       summary:'pneo',    line:'Accounts Payable',    src:'total (pneo)'},
   {sheet:'ap',       summary:'pneo',    line:'Rent Payments',       src:'rent payments'},
+  {sheet:'ap',       summary:'pneo',    line:'Loans Paid',          src:'loan & loc payments'},
   {sheet:'staffing', summary:'pneo',    line:'Staffing',            src:'total'},
   {sheet:'staffing', summary:'pneo',    line:'Staff Benefits',      src:'staff benefits (subtotal)'},
   {sheet:'ar',       summary:'shusher', line:'Accounts Receivable', src:'total (shusher)'},
@@ -296,18 +479,97 @@ function isLinkedLine(key,name){
 }
 
 // Compute week-ending date labels from the start date + chosen weekday
+// ISO-8601 week number (weeks start Monday; week 1 contains the year's first Thursday).
+function isoWeekNum(d){
+  var t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  var day=t.getUTCDay()||7;            // Mon=1..Sun=7
+  t.setUTCDate(t.getUTCDate()+4-day);  // shift to Thursday of this week
+  var yStart=new Date(Date.UTC(t.getUTCFullYear(),0,1));
+  return Math.ceil((((t-yStart)/86400000)+1)/7);
+}
 function computeDates(){
   var v=(document.getElementById('startDate')||{}).value;
-  var wkStart=+((document.getElementById('weekStart')||{}).value||2);
   var base=v?new Date(v+'T00:00:00'):new Date(2026,5,30);
-  // snap 'base' to the chosen start weekday (>= base)
+  // Always snap 'base' to Monday (>= base)
   var cur=new Date(base);
-  while(cur.getDay()!==wkStart)cur.setDate(cur.getDate()+1);
+  while(cur.getDay()!==1)cur.setDate(cur.getDate()-1); // 1 = Monday (snap back to the Monday of this week)
   var out=[];
   for(var i=0;i<N;i++){var e=new Date(cur);e.setDate(cur.getDate()+i*7);
     out.push((e.getMonth()+1)+'/'+e.getDate()+'/'+(''+e.getFullYear()).slice(2));}
   return out;
 }
+// Parallel array of ISO calendar week numbers for the N columns.
+function computeWeekNums(){
+  var v=(document.getElementById('startDate')||{}).value;
+  var base=v?new Date(v+'T00:00:00'):new Date(2026,5,30);
+  var cur=new Date(base);
+  while(cur.getDay()!==1)cur.setDate(cur.getDate()-1);
+  var out=[];
+  for(var i=0;i<N;i++){var e=new Date(cur);e.setDate(cur.getDate()+i*7);out.push(isoWeekNum(e));}
+  return out;
+}
+window.computeWeekNums=computeWeekNums;
+// --- date-driven data shifting ---------------------------------------------
+// Returns the "snapped" start Date (first chosen weekday >= the picker date).
+function currentStartDate(){
+  var v=(document.getElementById('startDate')||{}).value;
+  var base=v?new Date(v+'T00:00:00'):new Date(2026,5,30);
+  var cur=new Date(base);
+  while(cur.getDay()!==1)cur.setDate(cur.getDate()-1); // snap back to Monday of the week containing base
+  return cur;
+}
+// whole-week difference (new - old); positive = moved forward in time
+function weekDelta(oldD,newD){
+  if(!oldD||!newD)return 0;
+  var ms=newD.getTime()-oldD.getTime();
+  return Math.round(ms/(7*24*3600*1000));
+}
+// Shift every editable row's weekly values by `wk` weeks.
+// Positive wk = advance: what was week (i+wk) moves to week i; trailing weeks become 0.
+// Negative wk = go back: values move later; the first |wk| weeks become 0.
+// Running/derived rows (availability, running balances) are left to recompute.
+function shiftAllData(wk){
+  if(!wk)return;
+  // Capture, per summary entity, the correct NEW opening balance BEFORE we shift:
+  // advancing +wk weeks -> new opening = the ending balance of the week just before the new start
+  // (i.e. old ending at index wk-1). Going back (-wk) -> opening returns to the base opening (index 0 after shift is empty; keep original opening).
+  var newOpen={};
+  ['pneo','shusher','one20'].forEach(function(k){
+    if(!D[k]||!D[k].rows)return;
+    var end=D[k].rows.find(function(r){return r.role==='ending';});
+    var beg=D[k].rows.find(function(r){return r.role==='begin';});
+    if(wk>0){ newOpen[k]=(end && (wk-1)<end.vals.length)?end.vals[wk-1]:(beg?beg.vals[0]:0); }
+    else { newOpen[k]=beg?beg.vals[0]:0; } // going back: keep current opening as the seed
+  });
+  ['pneo','shusher','one20','ar','ap','staffing','bank'].forEach(function(k){
+    if(!D[k]||!D[k].rows)return;
+    D[k].rows.forEach(function(r){
+      var out=[];
+      for(var i=0;i<N;i++){
+        var s=i+wk;
+        out.push((s>=0 && s<r.vals.length)?r.vals[s]:0);
+      }
+      r.vals=out;
+    });
+  });
+  // Reseat each entity's opening balance so the begin/ending chain restarts correctly.
+  ['pneo','shusher','one20'].forEach(function(k){
+    if(!D[k]||!D[k].rows)return;
+    var beg=D[k].rows.find(function(r){return r.role==='begin';});
+    if(beg && newOpen[k]!==undefined)beg.vals[0]=newOpen[k];
+  });
+  // also shift per-week bank actual overrides if present
+  if(typeof bankActual!=='undefined' && bankActual){
+    Object.keys(bankActual).forEach(function(key){
+      var m=bankActual[key]; if(!m)return; var nm={};
+      Object.keys(m).forEach(function(wStr){ var w=+wStr; var nwk=w-wk; if(nwk>=0&&nwk<N)nm[nwk]=m[wStr]; });
+      bankActual[key]=nm;
+    });
+  }
+}
+window.currentStartDate=currentStartDate;
+window.weekDelta=weekDelta;
+window.shiftAllData=shiftAllData;
 function applyDates(){
   var d=computeDates();
   ['pneo','shusher','one20','ar','ap','staffing','bank'].forEach(function(k){if(D[k])D[k].dates=d.slice();});
@@ -400,20 +662,22 @@ function computeAmex(key){
       amex.vals[w]=(w===0)?(due-paid):(amex.vals[w-1]-paid+due);
     }
   }
-  // Funds from Lending Available = running: wk1 = starting available; wk>1 = prev - LoansDrawn[w] (draws reduce availability)
-  var drawn=findRow(rows,'loans drawn');
+  // Two separate draw lines reduce their availability line EVERY week (including Week 1).
+  // Each availability row stores its STARTING balance in row.startAvail (set from the Week-1 cell you enter).
+  // Running: avail[0] = start - draw[0]; avail[w] = avail[w-1] - draw[w].
+  var drawAmex=findRow(rows,'loans drawn - amex');
+  var drawTexas=findRow(rows,'loans drawn - texas');
   var funds=findRow(rows,'funds from lending');
-  if(funds){
-    var start=funds.vals[0];
-    for(var w=1;w<N;w++){var dr=drawn?drawn.vals[w]:0;funds.vals[w]=funds.vals[w-1]-dr;}
-    funds.vals[0]=start;
-  }
-  // Texas LOC Available = running: wk1 = starting availability ($250,000 default); wk>1 = prev - LoansDrawn[w]
   var texas=findRow(rows,'texas loc available');
+  if(funds){
+    if(funds.startAvail===undefined)funds.startAvail=funds.vals[0];
+    var prevF=funds.startAvail;
+    for(var w=0;w<N;w++){var dr=drawAmex?drawAmex.vals[w]:0;prevF=prevF-dr;funds.vals[w]=prevF;}
+  }
   if(texas){
-    var tstart=texas.vals[0];
-    for(var w=1;w<N;w++){var dr2=drawn?drawn.vals[w]:0;texas.vals[w]=texas.vals[w-1]-dr2;}
-    texas.vals[0]=tstart;
+    if(texas.startAvail===undefined)texas.startAvail=texas.vals[0];
+    var prevT=texas.startAvail;
+    for(var w=0;w<N;w++){var dr2=drawTexas?drawTexas.vals[w]:0;prevT=prevT-dr2;texas.vals[w]=prevT;}
   }
 }
 
@@ -435,6 +699,59 @@ function isEditable(key,r,rows){
 }
 
 /* build a summary table (editable + recompute) */
+// Entity -> which AR/AP subgroup label its items live under (by lowercase substring in the "Total (...)" row).
+var ENTITY_GROUP={pneo:{ar:'total (pneo)',ap:'total (pneo)'},shusher:{ar:'total (shusher)',ap:'total (sh co)'},one20:{ar:'total (one 20)',ap:'total (one 20)'}};
+// Collect the item rows belonging to an entity's subgroup on a detail sheet.
+function groupItems(sheetKey,groupSub){
+  var rows=(D[sheetKey]&&D[sheetKey].rows)?D[sheetKey].rows:[];
+  function isSub(r){return r.total===true||/total/i.test(r.name)||/subtotal/i.test(r.name)||/^(loan\s*&\s*loc payments|rent payments)$/i.test((r.name||'').trim());}
+  function isPass(r){return /^(etfs due|shusher corp due)$/i.test((r.name||'').trim());}
+  var out=[],inGroup=false;
+  for(var i=0;i<rows.length;i++){
+    var r=rows[i];
+    if(isSub(r)){ inGroup=(r.name||'').toLowerCase().indexOf(groupSub)>=0; continue; }
+    if(inGroup && !isPass(r)) out.push(r);
+  }
+  return out;
+}
+function buildRankedPanels(key,dates){
+  // combined shows pNeo+Shusher merged
+  var keys=(key==='combined')?['pneo','shusher']:[key];
+  var map=ENTITY_GROUP[keys[0]]; if(!map && key!=='combined')return '';
+  function collect(sheet,which){
+    var items=[];
+    keys.forEach(function(k){
+      var g=ENTITY_GROUP[k]; if(!g)return;
+      groupItems(sheet,g[which]).forEach(function(r){ items.push({name:r.name,amt:(r.vals[0]||0)}); });
+    });
+    // merge same-named, keep only positive current-week amounts, rank desc
+    var m={};items.forEach(function(it){m[it.name]=(m[it.name]||0)+it.amt;});
+    var arr=Object.keys(m).map(function(n){return {name:n,amt:m[n]};}).filter(function(x){return Math.abs(x.amt)>0.005;});
+    arr.sort(function(a,b){return Math.abs(b.amt)-Math.abs(a.amt);});
+    return arr;
+  }
+  var coll=collect('ar','ar');   // customer collections
+  var pays=collect('ap','ap');   // vendor payments
+  var d0=(dates&&dates[0])?dates[0]:'this week';
+  function rows(arr,accent){
+    if(!arr.length)return '<div class="rankempty">No amounts scheduled for '+d0+'</div>';
+    var tot=0;arr.forEach(function(x){tot+=x.amt;});
+    var h='';var rank=1;
+    arr.slice(0,5).forEach(function(x){
+      var pct=tot!==0?Math.max(2,Math.round(Math.abs(x.amt)/Math.abs(tot)*100)):0;
+      h+='<div class="rankrow"><div class="rankname"><span class="rankno">'+(rank++)+'</span>'+x.name+'</div>'+
+         '<div class="rankbarwrap"><div class="rankbar" style="width:'+pct+'%;background:'+accent+'"></div></div>'+
+         '<div class="rankamt'+(x.amt<0?' neg':'')+'">'+fmt(x.amt)+'</div></div>';
+    });
+    if(arr.length>5)h+='<div class="rankmore">+'+(arr.length-5)+' more…</div>';
+    h+='<div class="ranktot"><span>Total</span><span>'+fmt(tot)+'</span></div>';
+    return h;
+  }
+  return '<div class="rankgrid">'+
+    '<div class="panel rankpanel"><h3><span>📥 Customer Collections · '+d0+'</span><span class="ranksub">ranked by amount due</span></h3>'+rows(coll,'#1f7a6d')+'</div>'+
+    '<div class="panel rankpanel"><h3><span>📤 Vendor Payments · '+d0+'</span><span class="ranksub">ranked by amount owed</span></h3>'+rows(pays,'#b4632a')+'</div>'+
+    '</div>';
+}
 function buildSummary(key){
   var ent=D[key];var dates=ent.dates;var rows=ent.rows;
   if(key!=='combined')recompute(key);
@@ -444,34 +761,92 @@ function buildSummary(key){
   var begin=rows.find(function(r){return r.role==='begin';});
   var kEnd=ending?ending.vals[N-1]:0;
   var mn=1e15,mnW=0;for(var w=0;w<N;w++){if(ending && ending.vals[w]<mn){mn=ending.vals[w];mnW=w+1;}}
-  var inTot=rows.find(function(r){return r.role==='inTotal';});
-  var outTot=rows.find(function(r){return r.role==='outTotal';});
+  var inTot=rows.find(function(r){return r.role==='inbound';});
+  var outTot=rows.find(function(r){return r.role==='outbound';});
+  var lendTotK=rows.find(function(r){return r.role==='lending';});
+  var beginK=rows.find(function(r){return r.role==='begin';});
   function sum(r){if(!r)return 0;var s=0;for(var w=0;w<N;w++)s+=r.vals[w];return s;}
+  // Cash after Operations (before Lending) at final week = Beginning[N-1] + Inbound[N-1] - Outbound[N-1]
+  // (i.e., the ending EXCLUDING lending activity for the last week). Also track its lowest across weeks.
+  function inbW(w){ if(inTot)return inTot.vals[w]; var s=0;for(var i=0;i<rows.length;i++){var r=rows[i];var rl=r.role||'';if(rl==='outbound'||rl==='lending'||rl==='ending')break;if(rl==='item')s+=r.vals[w];}return s; }
+  var cashAfterOps=[];
+  for(var w=0;w<N;w++){
+    var bb=(w===0)?(beginK?beginK.vals[0]:0):(ending?ending.vals[w-1]:0);
+    var oo=outTot?outTot.vals[w]:0;
+    cashAfterOps.push(bb + inbW(w) - oo);
+  }
+  var caoEnd=cashAfterOps[N-1];
+  var beginCash=begin?begin.vals[0]:0;
+  var wk1End=ending?ending.vals[0]:0;
+  var wk2End=(ending && N>1)?ending.vals[1]:0;
+  var wk3End=(ending && N>2)?ending.vals[2]:0;
+  var d1=(dates&&dates[0])?dates[0]:'Wk 1';
+  var d2=(dates&&dates[1])?dates[1]:'Wk 2';
+  var wknums=(typeof computeWeekNums==='function')?computeWeekNums():null;
+  var wn1=wknums?wknums[0]:1, wn2=(wknums&&N>1)?wknums[1]:2;
+  // actual base start date (the picker value) for the Beginning tile
+  function pickerDateStr(){var v=(document.getElementById('startDate')||{}).value;var b=v?new Date(v+'T00:00:00'):new Date(2026,5,30);return (b.getMonth()+1)+'/'+b.getDate()+'/'+(''+b.getFullYear()).slice(2);}
+  var baseDateStr=pickerDateStr();
+  // week-ending date = the Sunday that closes each week (week-start Monday + 6 days)
+  function weekEndStr(mondayStr){var p=mondayStr.split('/');var yr=2000+ +p[2];var dt=new Date(yr,(+p[0])-1,(+p[1]));dt.setDate(dt.getDate()+7);return (dt.getMonth()+1)+'/'+dt.getDate()+'/'+(''+dt.getFullYear()).slice(2);}
+  var e1=(dates&&dates[0])?weekEndStr(dates[0]):'',e2=(dates&&dates[1])?weekEndStr(dates[1]):'';
+  var d3=(dates&&dates[2])?dates[2]:'Wk 3';
   var k='<div class="kpis">'+
-    '<div class="kpi end"><div class="lab">Ending Balance · Wk15</div><div class="val'+(kEnd<0?' neg':'')+'">'+fmt(kEnd)+'</div><div class="note">projected close</div></div>'+
-    '<div class="kpi min"><div class="lab">Lowest Weekly Balance</div><div class="val'+(mn<0?' neg':'')+'">'+fmt(mn)+'</div><div class="note">Wk '+mnW+'</div></div>'+
-    '<div class="kpi in"><div class="lab">Total Inbound · 15wk</div><div class="val">'+fmt(sum(inTot))+'</div><div class="note">receipts</div></div>'+
-    '<div class="kpi out"><div class="lab">Total Outbound · 15wk</div><div class="val">'+fmt(sum(outTot))+'</div><div class="note">disbursements</div></div>'+
+    '<div class="kpi near"><div class="lab">Beginning Cash · '+baseDateStr+'</div><div class="val'+(beginCash<0?' neg':'')+'">'+fmt(beginCash)+'</div><div class="note">opening balance</div></div>'+
+    '<div class="kpi end"><div class="lab">Ending · Wk '+wn1+' ('+e1+')</div><div class="val'+(wk1End<0?' neg':'')+'">'+fmt(wk1End)+'</div><div class="note">this week close</div></div>'+
+    '<div class="kpi wk2"><div class="lab">Ending · Wk '+wn2+' ('+e2+')</div><div class="val'+(wk2End<0?' neg':'')+'">'+fmt(wk2End)+'</div><div class="note">projected</div></div>'+
+    '<div class="kpi in"><div class="lab">This Week Inbound</div><div class="val">'+fmt(inTot?inTot.vals[0]:0)+'</div><div class="note">receipts · '+(e1||(dates&&dates[0]?dates[0]:'Wk 1'))+'</div></div>'+
+    '<div class="kpi out"><div class="lab">This Week Outbound</div><div class="val">'+fmt(outTot?outTot.vals[0]:0)+'</div><div class="note">disbursements · '+(e1||(dates&&dates[0]?dates[0]:'Wk 1'))+'</div></div>'+
     '</div>';
+  // ranked current-week collections (AR) + vendor payments (AP)
+  k+=buildRankedPanels(key,dates);
   // chart of ending balance
-  k+='<div class="panel"><h3><span>'+({pneo:'pNeo',shusher:'Shusher',one20:'One 20'}[key])+' — Ending Bank Balance</span><span style="font-size:11px;color:#7a8699">updates as you edit</span></h3>'+
+  k+='<div class="panel"><h3><span>'+({pneo:'pNeo',shusher:'Shusher',one20:'One 20',combined:'pNeo + Shusher'}[key]||'')+' — Ending Bank Balance</span><span style="font-size:11px;color:#7a8699">updates as you edit</span></h3>'+
      '<div class="chartwrap"><svg id="chart_'+key+'" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet"></svg></div>'+
      '<div class="legend"><span><i style="background:#1f7a6d"></i>Ending balance</span><span><i style="background:#b3261e"></i>Zero line</span></div></div>';
   // table
-  k+='<div class="panel tablecard"><table><thead><tr><th>Line</th>';
-  for(var w=0;w<N;w++)k+='<th>Wk '+(w+1)+'<br><span class="wd">'+dates[w]+'</span></th>';
+  k+='<div class="panel tablecard"><table><thead><tr><th class="lblhead">Line <button type="button" class="collapseAllBtn collapseallbtn" title="Collapse / expand all">⊟ All</button></th>';
+  var wkNums=(typeof computeWeekNums==='function')?computeWeekNums():null;
+  function _wkEnd(mondayStr){var p=mondayStr.split('/');var yr=2000+ +p[2];var dt=new Date(yr,(+p[0])-1,(+p[1]));dt.setDate(dt.getDate()+7);return (dt.getMonth()+1)+'/'+dt.getDate()+'/'+(''+dt.getFullYear()).slice(2);}
+  for(var w=0;w<N;w++)k+='<th>Wk '+(wkNums?wkNums[w]:(w+1))+'<br><span class="wd">'+_wkEnd(dates[w])+'</span></th>';
   k+='<th>'+N+'-Wk</th></tr></thead><tbody>';
+  var curSection=null; var secHdr=-1; var curSectionHdr=-1; // section currently being rendered: 'inbound'|'outbound'|'lending'
+  var colspan=N+2; // label + weeks + total column
+  function addBtnRow(section,gid){
+    var lbl=section==='inbound'?'Inbound':(section==='outbound'?'Outbound':'Lending');
+    return '<tr class="addrow" data-secgid="'+gid+'"><td class="lbl" colspan="'+colspan+'"><button class="addsumline" data-k="'+key+'" data-sec="'+section+'">＋ Add line to '+lbl+'</button></td></tr>';
+  }
   rows.forEach(function(r,ri){
     var role=r.role||'';
+    // when a new block starts (section header / ending / info / adjust), close the open section with its add button
+    if(role==='inbound'||role==='outbound'||role==='lending'||role==='ending'||role==='adjust'||role==='info'){
+      if(curSection){k+=addBtnRow(curSection,curSectionHdr);curSection=null;}
+      if(role==='inbound'){curSection='inbound';curSectionHdr=ri;}
+      else if(role==='outbound'){curSection='outbound';curSectionHdr=ri;}
+      else if(role==='lending'){curSection='lending';curSectionHdr=ri;}
+    }
     var cls=role==='begin'?'begin':(role==='ending'?'ending':(role==='adjust'?'adjust':(role==='inbound'?'total sec-in':(role==='outbound'?'total sec-out':(role==='lending'?'total sec-lend':(role==='info'?'info':'item'))))));
+    if(role==='inbound'||role==='outbound'||role==='lending'){secHdr=ri;}
+    var isHdr=(role==='inbound'||role==='outbound'||role==='lending');
     var linked=isLinkedLine(key,r.name);
     var editable=isEditable(key,r,rows) && !linked; // linked lines are driven by their detail sheet
     var isFunds=(r.role==='info' && (r.name.toLowerCase().indexOf('funds from lending')>=0 || r.name.toLowerCase().indexOf('texas loc available')>=0));
-    var lblmap={"Accounts Receivable":"AR","Accounts Payable":"AP","Staffing":"Staffing","ETFS Due":"AR","Shusher Due":"AR","Staff Benefits":"Staffing","Rent Payments":"AP"};
+    var lblmap={"Accounts Receivable":"AR","Accounts Payable":"AP","Staffing":"Staffing","ETFS Due":"AR","Shusher Due":"AR","Staff Benefits":"Staffing","Rent Payments":"AP","Loans Paid":"AP"};
     var lblhtml=r.name+(linked?' <span class="linkbadge" title="Linked from the '+(lblmap[r.name]||"detail")+' tab — edit it there">🔗</span>':"");
-    k+='<tr class="'+cls+(linked?' linked':'')+'"><td class="lbl">'+lblhtml+'</td>';
+    // deletable user-added summary items get an ✕
+    var delx=(r.userAdded?' <button class="delsumrow" data-k="'+key+'" data-r="'+ri+'" title="Remove line">✕</button>':'');
+    var lblinner=(r.userAdded?'<input class="sumlbledit" data-k="'+key+'" data-r="'+ri+'" value="'+(''+r.name).replace(/"/g,'&quot;')+'">':lblhtml)+delx;
+    var scaret=isHdr?'<span class="caret" data-scollapse="'+key+'" data-gid="'+ri+'" title="Collapse / expand">▾</span> ':'';
+    var sgrp=(role==='item' && secHdr>=0)?(' data-singroup="'+secHdr+'"'):'';
+    var nlowr=(r.name||'').toLowerCase();
+    var isAvail=(r.role==='info' && (nlowr.indexOf('funds from lending')>=0 || nlowr.indexOf('texas loc available')>=0));
+    if(isAvail){
+      var sv=(r.startAvail!==undefined?r.startAvail:r.vals[0]);
+      lblinner=r.name+' <span class="startbox">start <input class="startavail" data-k="'+key+'" data-r="'+ri+'" value="'+fmt(sv)+'"></span>';
+    }
+    k+='<tr class="'+cls+(linked?' linked':'')+(r.userAdded?' useradded':'')+'"'+sgrp+'><td class="lbl">'+scaret+lblinner+'</td>';
     for(var w=0;w<N;w++){
-      var editThis = (editable && !(role==='begin' && w>0)) || (isFunds && w===0);
+      var editThis = (editable && !(role==='begin' && w>0)); // availability rows fully computed; start set via label input
       if(editThis){var ev=r.vals[w];k+='<td class="edit"><input type="text" inputmode="decimal" class="'+(ev<0?'negin':'')+'" data-k="'+key+'" data-r="'+ri+'" data-w="'+w+'" value="'+fmt(ev)+'"></td>';}
       else {var v=r.vals[w];k+='<td id="sc_'+key+'_'+ri+'_'+w+'"><span class="cellv'+(v<0?' neg':'')+'">'+fmt(v)+'</span></td>';}
     }
@@ -520,7 +895,9 @@ function buildBank(el){
   k+='</div>';
   k+='<p class="hint">Bank balances by entity. Account rows are editable; each entity’s <b>Bank Accounts</b> subtotal and the <b>All Bank Accounts</b> grand total recalculate automatically. The <b>Week 1</b> subtotal for each entity flows into that entity’s <b>Beginning Bank Balance</b> on its summary tab, so correcting a bank balance updates the summary for that week.</p>';
   k+='<div class="panel tablecard"><table><thead><tr><th>Account</th>';
-  for(var w=0;w<N;w++)k+='<th>Wk '+(w+1)+'<br><span class="wd">'+dates[w]+'</span></th>';
+  var wkNums=(typeof computeWeekNums==='function')?computeWeekNums():null;
+  function _wkEnd(mondayStr){var p=mondayStr.split('/');var yr=2000+ +p[2];var dt=new Date(yr,(+p[0])-1,(+p[1]));dt.setDate(dt.getDate()+7);return (dt.getMonth()+1)+'/'+dt.getDate()+'/'+(''+dt.getFullYear()).slice(2);}
+  for(var w=0;w<N;w++)k+='<th>Wk '+(wkNums?wkNums[w]:(w+1))+'<br><span class="wd">'+_wkEnd(dates[w])+'</span></th>';
   k+='<th>'+N+'-Wk</th></tr></thead><tbody>';
   rows.forEach(function(r,ri){
     if(r.kind==='grand'){
@@ -572,8 +949,10 @@ function buildDetail(key){
       '<button class="addbtn" data-addline="'+key+'">＋ Add line item</button>'+
       '<label class="upbtn">⬆ Upload Excel<input type="file" accept=".xlsx,.xls" data-upload="'+key+'" style="display:none"></label>'+
     '</div></div>';
-  k+='<div class="panel tablecard"><table><thead><tr><th>Line</th>';
-  for(var w=0;w<N;w++)k+='<th>Wk '+(w+1)+'<br><span class="wd">'+dates[w]+'</span></th>';
+  k+='<div class="panel tablecard"><table><thead><tr><th class="lblhead">Line <button type="button" class="collapseAllBtn collapseallbtn" title="Collapse / expand all">⊟ All</button></th>';
+  var wkNums=(typeof computeWeekNums==='function')?computeWeekNums():null;
+  function _wkEnd(mondayStr){var p=mondayStr.split('/');var yr=2000+ +p[2];var dt=new Date(yr,(+p[0])-1,(+p[1]));dt.setDate(dt.getDate()+7);return (dt.getMonth()+1)+'/'+dt.getDate()+'/'+(''+dt.getFullYear()).slice(2);}
+  for(var w=0;w<N;w++)k+='<th>Wk '+(wkNums?wkNums[w]:(w+1))+'<br><span class="wd">'+_wkEnd(dates[w])+'</span></th>';
   k+='<th>'+N+'-Wk</th></tr></thead><tbody>';
   // entity brand accents for detail subtotals
   function detailBrand(name){
@@ -586,16 +965,31 @@ function buildDetail(key){
   function isEntityTotal(nm){return /^total\s*\(/i.test(nm.trim());}
   function isSubtotal(r){return r.total===true || /total/i.test(r.name) || /subtotal/i.test(r.name) || /^(loan\s*&\s*loc payments|rent payments)$/i.test(r.name.trim());}
   var itemIdx=0, curBrand=detailBrand('');
+  var colspanD=N+2;
+  // Pre-scan: assign each subtotal a group id and remember the last item index in each group (for the add button)
+  var groupOf=[], curG=-1;
+  for(var gi=0;gi<rows.length;gi++){ if(isSubtotal(rows[gi])){curG=gi;} groupOf[gi]=curG; }
+  function addLineRow(gid){
+    return '<tr class="addrow detailadd" data-group="'+gid+'"><td class="lbl" colspan="'+colspanD+'"><button class="adddetailline" data-k="'+key+'" data-gid="'+gid+'">＋ Add line</button></td></tr>';
+  }
   rows.forEach(function(r,ri){
     var isTotal=isSubtotal(r);
     var isEntity=isEntityTotal(r.name);
+    // when a NEW subtotal starts, close the previous group with an add-line button
+    if(isTotal && ri>0){
+      var prevG=groupOf[ri-1];
+      if(prevG>=0)k+=addLineRow(prevG);
+    }
     if(isEntity){curBrand=detailBrand(r.name);itemIdx=0;}
     var isPass=/^(etfs due|shusher corp due)$/i.test(r.name.trim()); // feed OTHER summary lines, not this AR total
+    var gid=groupOf[ri];
     var rowcls=isEntity?'total detail-sub':(isTotal?'total detail-subsub':('item detailitem '+(isPass?'passthru ':'')+(itemIdx%2===0?'alt0':'alt1')));if(!isTotal)itemIdx++;
     var del=(!isTotal)?'<button class="delbtn" data-delline="'+key+'" data-ri="'+ri+'" title="Remove line">✕</button>':'';
-    var lbl=(!isTotal)?'<input class="lbledit" data-lblk="'+key+'" data-ri="'+ri+'" value="'+(''+r.name).replace(/"/g,'&quot;')+'">':r.name;
+    var caret=isTotal?'<span class="caret" data-collapse="'+key+'" data-gid="'+ri+'" title="Collapse / expand">▾</span> ':'';
+    var lbl=(!isTotal)?'<input class="lbledit" data-lblk="'+key+'" data-ri="'+ri+'" value="'+(''+r.name).replace(/"/g,'&quot;')+'">':(caret+r.name);
     var styleTot=isTotal?(' style="--eb:'+curBrand.bg+';--eac:'+curBrand.accent+'"'):(' style="--eac:'+curBrand.accent+'"');
-    k+='<tr class="'+rowcls+'"'+styleTot+'><td class="lbl"><div class="lblwrap">'+lbl+del+'</div></td>';
+    var dataGrp=(!isTotal && gid>=0)?(' data-ingroup="'+gid+'"'):'';
+    k+='<tr class="'+rowcls+'"'+styleTot+dataGrp+'><td class="lbl"><div class="lblwrap">'+lbl+del+'</div></td>';
     for(var w=0;w<N;w++){
       if(isTotal){var v=r.vals[w];k+='<td id="dc_'+key+'_'+ri+'_'+w+'"><span class="cellv'+(v<0?' neg':'')+'">'+fmt(v)+'</span></td>';}
       else {var dv=r.vals[w];k+='<td class="edit"><input type="text" inputmode="decimal" class="'+(dv<0?'negin':'')+'" data-k="'+key+'" data-r="'+ri+'" data-w="'+w+'" value="'+fmt(dv)+'"></td>';}
@@ -603,6 +997,8 @@ function buildDetail(key){
     var tot=0;for(var w=0;w<N;w++)tot+=r.vals[w];
     k+='<td id="dt_'+key+'_'+ri+'">'+ (isTotal?fmt(tot):fmt(tot)) +'</td></tr>';
   });
+  // add-line button for the final group
+  if(rows.length>0){var lastG=groupOf[rows.length-1];if(lastG>=0)k+=addLineRow(lastG);}
   k+='</tbody></table></div>';
   el.innerHTML=k;return el;
 }
@@ -642,15 +1038,16 @@ function delDetailLine(key,ri){
   renderView(key);
 }
 function recomputeDetail(key){
-  // Subtotal rows (name matches /total/i OR flagged r.total) own the item rows that follow them
-  // until the next subtotal. Each subtotal = sum of its owned items.
+  // Subtotal rows own the item rows that follow them until the next subtotal; subtotal = sum of owned items.
+  // EXCEPTION: pass-through lines (ETFS DUE, SHUSHER CORP DUE on AR) feed OTHER summary lines and are
+  // excluded from their group's total (matching the workbook, where AR Total(pNeo) = SUM(rows 5-18)).
   var rows=D[key].rows;
   function isSub(r){return r.total===true || /total/i.test(r.name) || /subtotal/i.test(r.name) || /^(loan\s*&\s*loc payments|rent payments)$/i.test(r.name.trim());}
-  // For each subtotal, collect following items until next subtotal
+  function isPassthru(r){return /^(etfs due|shusher corp due)$/i.test((r.name||'').trim());}
   for(var i=0;i<rows.length;i++){
     if(isSub(rows[i])){
       var items=[];
-      for(var j=i+1;j<rows.length;j++){ if(isSub(rows[j]))break; items.push(rows[j]); }
+      for(var j=i+1;j<rows.length;j++){ if(isSub(rows[j]))break; if(isPassthru(rows[j]))continue; items.push(rows[j]); }
       for(var w=0;w<N;w++){var s=0;items.forEach(function(r){s+=r.vals[w];});rows[i].vals[w]=s;}
     }
   }
@@ -743,6 +1140,8 @@ function renderView(key){
     host.querySelectorAll('input').forEach(function(i){i.setAttribute('readonly','');i.style.pointerEvents='none';i.tabIndex=-1;});
   }
   current=key;
+  if(window.wireCollapseAll)window.wireCollapseAll();
+  if(window.__collapsedByTab && window.__collapsedByTab[key] && window.applyCollapseState){window.applyCollapseState();} // restore THIS tab's collapse preference
 }
 
 function wireEditors(key,isSum){
@@ -814,6 +1213,91 @@ function wireEditors(key,isSum){
       var av=document.getElementById('lav_'+i);if(av)av.textContent=fmt((D.loans[i].limit||0)-(D.loans[i].balance||0));
     });
   });
+  // Starting availability input (Funds / Texas LOC): sets the running start balance
+  document.querySelectorAll('#views input.startavail').forEach(function(inp){
+    inp.addEventListener('change',function(){
+      var kk=this.dataset.k,ri=+this.dataset.r;D[kk].rows[ri].startAvail=num(this.value);
+      recompute(kk);renderView(kk);
+    });
+    inp.addEventListener('focus',function(){this.value=String(D[this.dataset.k].rows[+this.dataset.r].startAvail||0);this.select();});
+    inp.addEventListener('blur',function(){this.value=fmt(D[this.dataset.k].rows[+this.dataset.r].startAvail||0);});
+  });
+  // Add a new line into a summary section (inbound/outbound/lending)
+  document.querySelectorAll('#views button.addsumline').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      addSummaryLine(this.dataset.k,this.dataset.sec);
+    });
+  });
+  // Edit a user-added summary line label
+  document.querySelectorAll('#views input.sumlbledit').forEach(function(inp){
+    inp.addEventListener('change',function(){
+      var kk=this.dataset.k,ri=+this.dataset.r;D[kk].rows[ri].name=this.value;
+    });
+  });
+  // Delete a user-added summary line (subtract its values from the owning subtotal first)
+  document.querySelectorAll('#views button.delsumrow').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var kk=this.dataset.k,ri=+this.dataset.r;var row=D[kk].rows[ri];
+      var sub=subtotalFor(kk,row);
+      if(sub){for(var w=0;w<N;w++){sub.vals[w]=(sub.vals[w]||0)-(row.vals[w]||0);}}
+      D[kk].rows.splice(ri,1);recompute(kk);renderView(kk);
+    });
+  });
+  // Add a new line into a DETAIL subgroup (AR/AP/Staffing)
+  document.querySelectorAll('#views button.adddetailline').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      addDetailLine(this.dataset.k,+this.dataset.gid);
+    });
+  });
+  // Collapse / expand a summary section
+  document.querySelectorAll('#views .caret[data-scollapse]').forEach(function(c){
+    c.addEventListener('click',function(){
+      var kk=this.dataset.scollapse,gid=+this.dataset.gid;
+      var open=this.textContent.trim()==='▾';this.textContent=open?'▸':'▾';
+      var host=document.getElementById('views');
+      host.querySelectorAll('[data-singroup="'+gid+'"]').forEach(function(tr){tr.style.display=open?'none':'';});
+      host.querySelectorAll('.addrow[data-secgid="'+gid+'"]').forEach(function(tr){tr.style.display=open?'none':'';});
+    });
+  });
+  // Collapse / expand a detail subgroup
+  document.querySelectorAll('#views .caret[data-collapse]').forEach(function(c){
+    c.addEventListener('click',function(){
+      var kk=this.dataset.collapse,gid=+this.dataset.gid;
+      var open=this.textContent.trim()==='▾';
+      this.textContent=open?'▸':'▾';
+      var host=document.getElementById('views');
+      host.querySelectorAll('[data-ingroup="'+gid+'"]').forEach(function(tr){tr.style.display=open?'none':'';});
+      host.querySelectorAll('.detailadd[data-group="'+gid+'"]').forEach(function(tr){tr.style.display=open?'none':'';});
+    });
+  });
+}
+// Insert a new editable item at the END of a summary section, right before that section's add button.
+function addSummaryLine(key,section){
+  var rows=D[key].rows;
+  var roleOf={inbound:'inbound',outbound:'outbound',lending:'lending'};
+  // find the section header index
+  var hi=-1;for(var i=0;i<rows.length;i++){if((rows[i].role||'')===roleOf[section]){hi=i;break;}}
+  if(hi<0)return;
+  // find insert point: first row after hi whose role is a new block (header/ending/info/adjust)
+  var ins=rows.length;
+  for(var j=hi+1;j<rows.length;j++){var rl=rows[j].role||'';
+    if(rl==='inbound'||rl==='outbound'||rl==='lending'||rl==='ending'||rl==='info'||rl==='adjust'){ins=j;break;}}
+  var zeros=[];for(var w=0;w<N;w++)zeros.push(0);
+  rows.splice(ins,0,{name:'New line',vals:zeros,role:'item',userAdded:true});
+  recompute(key);renderView(key);
+}
+// Insert a new editable line at the end of a DETAIL subgroup (gid = index of that group's subtotal row).
+function addDetailLine(key,gid){
+  var rows=D[key].rows;
+  function isSub(r){return r.total===true || /total/i.test(r.name) || /subtotal/i.test(r.name) || /^(loan\s*&\s*loc payments|rent payments)$/i.test(r.name.trim());}
+  // find end of this group: first subtotal after gid, else end
+  var ins=rows.length;
+  for(var j=gid+1;j<rows.length;j++){ if(isSub(rows[j])){ins=j;break;} }
+  var zeros=[];for(var w=0;w<N;w++)zeros.push(0);
+  rows.splice(ins,0,{name:'New line',vals:zeros});
+  recomputeDetail(key);
+  if(LINKS.some(function(L){return L.sheet===key;}))applyLinks();
+  renderView(key);
 }
 function refreshSummary(key){
   // re-render just this view to reflect recomputed begin/ending/totals
@@ -833,15 +1317,16 @@ function updateKpisSummary(key){
   var inTot=rows.find(function(r){return r.role==='inbound';});
   var outTot=rows.find(function(r){return r.role==='outbound';});
   function sum(r){if(!r)return 0;var s=0;for(var w=0;w<N;w++)s+=r.vals[w];return s;}
-  // KPI DOM order: end, min, in, out (4 .kpi .val)
+  // KPI DOM order: beginning, wk1, wk2, inbound, outbound => 5 .kpi .val
   var vals=document.querySelectorAll('#views .kpi .val');
-  if(vals.length>=4 && ending){
-    var kEnd=ending.vals[N-1];
-    var mn=1e15;for(var w=0;w<N;w++)if(ending.vals[w]<mn)mn=ending.vals[w];
-    vals[0].textContent=fmt(kEnd);vals[0].className='val'+(kEnd<0?' neg':'');
-    vals[1].textContent=fmt(mn);vals[1].className='val'+(mn<0?' neg':'');
-    vals[2].textContent=fmt(sum(inTot));
-    vals[3].textContent=fmt(sum(outTot));
+  if(vals.length>=5 && ending){
+    var bC=begin?begin.vals[0]:0;
+    var w1=ending.vals[0], w2=(N>1?ending.vals[1]:0);
+    vals[0].textContent=fmt(bC);vals[0].className='val'+(bC<0?' neg':'');           // Beginning Cash
+    vals[1].textContent=fmt(w1);vals[1].className='val'+(w1<0?' neg':'');           // Wk1 end
+    vals[2].textContent=fmt(w2);vals[2].className='val'+(w2<0?' neg':'');           // Wk2 end
+    vals[3].textContent=fmt(inTot?inTot.vals[0]:0);                                 // This Week Inbound
+    vals[4].textContent=fmt(outTot?outTot.vals[0]:0);                               // This Week Outbound
   }
 }
 function recomputeKeep(key,activeInput){
@@ -855,7 +1340,12 @@ function recomputeKeep(key,activeInput){
     }
     var tcell=document.getElementById('st_'+key+'_'+ri);
     if(tcell){var role=r.role||'';if(role!=='begin'&&role!=='ending'&&role!=='info'&&role!=='adjust'){var tot=0;for(var w=0;w<N;w++)tot+=r.vals[w];tcell.textContent=fmt(tot);}}
-    // also refresh sibling editable inputs that are NOT focused (e.g. begin wk1 unaffected, but subtotals are non-editable so fine)
+    // Refresh the Week-1 editable availability input (Funds / Texas LOC) to its computed value, unless focused.
+    var nlow=(r.name||'').toLowerCase();
+    if(r.role==='info' && (nlow.indexOf('funds from lending')>=0 || nlow.indexOf('texas loc available')>=0)){
+      var inp1=document.querySelector('#views input[data-k="'+key+'"][data-r="'+ri+'"][data-w="0"]');
+      if(inp1 && inp1!==activeInput && document.activeElement!==inp1){inp1.value=fmt(r.vals[0]);inp1.classList.toggle('negin',r.vals[0]<0);}
+    }
   });
   updateKpisSummary(key);
   drawSumChart(key);
@@ -864,7 +1354,7 @@ function refreshDetailKeep(key,activeInput){
   var rows=D[key].rows;
   recomputeDetail(key);
   if(LINKS.some(function(L){return L.sheet===key;})){applyLinks();}
-  function isSub(r){return r.total===true || /total/i.test(r.name) || /subtotal/i.test(r.name);}
+  function isSub(r){return r.total===true || /total/i.test(r.name) || /subtotal/i.test(r.name) || /^(loan\s*&\s*loc payments|rent payments)$/i.test((r.name||'').trim());}
   // update every subtotal row's calculated cells in place
   rows.forEach(function(r,ri){
     if(isSub(r)){
@@ -885,16 +1375,66 @@ function buildTabs(){
     t.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});this.classList.add('on');
     renderView(this.dataset.key);});});
 }
+loadState(); // restore any previously saved edits from this browser
 buildTabs();
 applyDates();
+if(D.staffing&&D.staffing.rows)recomputeDetail('staffing'); // reflect CFO default in the wages Total
 applyLinks();
 applyBankLink();
 // wire date + week controls
 (function(){
   var sd=document.getElementById('startDate'),ws=document.getElementById('weekStart'),
       nw=document.getElementById('numWeeks'),mn=document.getElementById('wkMinus'),pl=document.getElementById('wkPlus');
-  if(sd)sd.addEventListener('change',function(){applyDates();renderView(current||'pneo');});
-  if(ws)ws.addEventListener('change',function(){applyDates();renderView(current||'pneo');});
+  window.__collapsedByTab={}; // per-tab collapse preference: {tabKey:true/false}
+  function applyCollapseState(){
+    var host=document.getElementById('views');if(!host)return;
+    var want=!!window.__collapsedByTab[current]; // true = collapsed (▸) for THIS tab
+    host.querySelectorAll('.caret[data-scollapse],.caret[data-collapse]').forEach(function(c){
+      var isCollapsed=c.textContent.trim()==='▸';
+      if(isCollapsed!==want)c.click();
+    });
+  }
+  window.applyCollapseState=applyCollapseState;
+  var rs=document.getElementById('resetSaved');
+  if(rs){rs.addEventListener('click',function(){
+    if(confirm('Clear all saved edits in this browser and reload the original workbook values?')){
+      try{localStorage.removeItem(SAVE_KEY);}catch(e){}
+      location.reload();
+    }
+  });}
+  window.wireCollapseAll=function(){
+    var st=!!window.__collapsedByTab[current];
+    document.querySelectorAll('#views .collapseAllBtn').forEach(function(b){
+      b.textContent=st?'⊞ All':'⊟ All';
+      b.onclick=function(){
+        window.__collapsedByTab[current]=!window.__collapsedByTab[current];
+        applyCollapseState();
+        var s2=!!window.__collapsedByTab[current];
+        document.querySelectorAll('#views .collapseAllBtn').forEach(function(x){x.textContent=s2?'⊞ All':'⊟ All';});
+      };
+    });
+  };
+  // remember the start date currently reflected in the data
+  window.__appliedStart=currentStartDate();
+  function onDateChange(){
+    var newStart=currentStartDate();
+    var wk=weekDelta(window.__appliedStart,newStart);
+    if(wk!==0){
+      shiftAllData(wk);
+      // NOTE: do NOT re-run applyBankLink here. Normally the Bank tab's Week-1 subtotal seeds
+      // the opening balance, but after a week-shift the opening must come from the prior week's
+      // ending (already reseated inside shiftAllData). Re-linking the bank would wrongly reset it.
+      ['ar','ap','staffing'].forEach(function(k){if(D[k]&&D[k].rows)recomputeDetail(k);});
+      if(typeof applyLinks==='function')applyLinks();
+      ['pneo','shusher','one20'].forEach(function(k){if(D[k]&&D[k].rows)recompute(k);});
+    }
+    window.__appliedStart=newStart;
+    applyDates();
+    renderView(current||'pneo');
+    if(typeof saveState==='function')saveState();
+  }
+  if(sd)sd.addEventListener('change',onDateChange);
+
   if(nw)nw.addEventListener('change',function(){setWeeks(parseInt(this.value)||15);});
   if(mn)mn.addEventListener('click',function(){setWeeks(N-1);});
   if(pl)pl.addEventListener('click',function(){setWeeks(N+1);});
