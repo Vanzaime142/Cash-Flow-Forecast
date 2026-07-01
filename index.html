@@ -24,13 +24,17 @@
   .stepper button{font:inherit;font-size:15px;font-weight:700;width:26px;height:26px;border:none;border-radius:6px;background:#fff;color:var(--navy);cursor:pointer;line-height:1}
   .stepper button:hover{background:var(--mist)}
   /* tabs */
-  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 14px}
-  .tab{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--steel);padding:8px 15px;border-radius:9px}
-  .tab:hover{background:var(--mist)}
-  .tab.on{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 2px 8px rgba(31,56,100,.25)}
-  .tab.grp{background:#f0f4fa}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 16px;padding:10px;background:#1f3864;border:1px solid #142744;border-radius:12px;box-shadow:0 2px 8px rgba(15,26,47,.25)}
+  .tab{font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;border:2.5px solid #c46a1c;background:#f5952f;color:#fff;padding:10px 20px;border-radius:10px;transition:all .12s;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+  .tab:hover{background:#e78320;border-color:#a85812;transform:translateY(-1px)}
+  /* selected tab: deep navy with a gold ring — clearly distinct from the orange unselected tabs */
+  .tab.on{background:#0d2748;color:#fff;border-color:#ffb84d;box-shadow:0 0 0 2px #ffb84d, 0 4px 14px rgba(0,0,0,.45);transform:translateY(-1px)}
+  .tab.grp{background:#f7a94d;border-color:#cf7d24;color:#5a3208}
+  .tab.grp.on{background:#0d2748;color:#fff;border-color:#ffb84d;box-shadow:0 0 0 2px #ffb84d, 0 4px 14px rgba(0,0,0,.45)}
   .view{display:none}.view.on{display:block}
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 16px}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0 0 16px}
+  @media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:680px){.kpis{grid-template-columns:repeat(2,1fr)}}
   .kpi{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px 15px;box-shadow:var(--shadow)}
   .kpi .lab{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--steel);font-weight:700}
   .kpi .val{font-size:22px;font-weight:750;margin-top:3px;color:var(--navy);font-variant-numeric:tabular-nums}
@@ -117,8 +121,26 @@
   .saveind{font-size:11px;color:#1f7a6d;font-weight:700;opacity:.45;transition:opacity .3s}
   .resetbtn{background:#fff;border:1px solid #cdd7ea;color:#305496;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer}
   .resetbtn:hover{background:#f0f4fb}
-  .kpi.near{border-top:3px solid #305496;background:linear-gradient(180deg,#f4f8ff,#ffffff)}
-  .kpi.near .nearrow{display:flex;gap:18px;margin-top:2px}
+  .rankgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 16px}
+  .rankpanel h3{display:flex;justify-content:space-between;align-items:baseline}
+  .ranksub{font-size:10.5px;color:#8a98ac;font-weight:600}
+  .rankrow{display:grid;grid-template-columns:minmax(120px,1.4fr) 1fr auto;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid #eef2f7}
+  .rankname{font-size:12.5px;color:#22314a;font-weight:600;display:flex;align-items:center;gap:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rankno{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#eef2f9;color:#305496;font-size:10.5px;font-weight:800;flex:none}
+  .rankbarwrap{background:#f0f3f8;border-radius:6px;height:8px;overflow:hidden}
+  .rankbar{height:100%;border-radius:6px}
+  .rankamt{font-size:12.5px;font-weight:700;color:#1f3864;text-align:right;white-space:nowrap}
+  .rankamt.neg{color:#c0392b}
+  .ranktot{display:flex;justify-content:space-between;padding-top:8px;margin-top:4px;border-top:2px solid #d9e1ee;font-weight:800;color:#1f3864;font-size:13px}
+  .rankmore{font-size:11px;color:#8a98ac;padding:4px 0;font-style:italic}
+  .rankempty{font-size:12px;color:#8a98ac;padding:14px 0;font-style:italic;text-align:center}
+  @media(max-width:820px){.rankgrid{grid-template-columns:1fr}}
+  .kpi.near{border-top:3px solid #305496;background:linear-gradient(180deg,#eef3fc,#ffffff)}
+  .kpi.wk2{border-top:3px solid #4a76b8}
+  .kpi.wk3{border-top:3px solid #7a9bd0}
+  .kpi.near .nearrow{display:flex;gap:18px;margin-top:6px}
+  .kpi.near .nearrow3{gap:12px}
+  .kpi.near .nearrow3 .val.small{font-size:16px}
   .kpi.near .nearcol{flex:1}
   .kpi.near .nearwk{font-size:10.5px;color:#5a6b85;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px}
   .kpi .val.small{font-size:19px}
@@ -550,6 +572,59 @@ function isEditable(key,r,rows){
 }
 
 /* build a summary table (editable + recompute) */
+// Entity -> which AR/AP subgroup label its items live under (by lowercase substring in the "Total (...)" row).
+var ENTITY_GROUP={pneo:{ar:'total (pneo)',ap:'total (pneo)'},shusher:{ar:'total (shusher)',ap:'total (sh co)'},one20:{ar:'total (one 20)',ap:'total (one 20)'}};
+// Collect the item rows belonging to an entity's subgroup on a detail sheet.
+function groupItems(sheetKey,groupSub){
+  var rows=(D[sheetKey]&&D[sheetKey].rows)?D[sheetKey].rows:[];
+  function isSub(r){return r.total===true||/total/i.test(r.name)||/subtotal/i.test(r.name)||/^(loan\s*&\s*loc payments|rent payments)$/i.test((r.name||'').trim());}
+  function isPass(r){return /^(etfs due|shusher corp due)$/i.test((r.name||'').trim());}
+  var out=[],inGroup=false;
+  for(var i=0;i<rows.length;i++){
+    var r=rows[i];
+    if(isSub(r)){ inGroup=(r.name||'').toLowerCase().indexOf(groupSub)>=0; continue; }
+    if(inGroup && !isPass(r)) out.push(r);
+  }
+  return out;
+}
+function buildRankedPanels(key,dates){
+  // combined shows pNeo+Shusher merged
+  var keys=(key==='combined')?['pneo','shusher']:[key];
+  var map=ENTITY_GROUP[keys[0]]; if(!map && key!=='combined')return '';
+  function collect(sheet,which){
+    var items=[];
+    keys.forEach(function(k){
+      var g=ENTITY_GROUP[k]; if(!g)return;
+      groupItems(sheet,g[which]).forEach(function(r){ items.push({name:r.name,amt:(r.vals[0]||0)}); });
+    });
+    // merge same-named, keep only positive current-week amounts, rank desc
+    var m={};items.forEach(function(it){m[it.name]=(m[it.name]||0)+it.amt;});
+    var arr=Object.keys(m).map(function(n){return {name:n,amt:m[n]};}).filter(function(x){return Math.abs(x.amt)>0.005;});
+    arr.sort(function(a,b){return Math.abs(b.amt)-Math.abs(a.amt);});
+    return arr;
+  }
+  var coll=collect('ar','ar');   // customer collections
+  var pays=collect('ap','ap');   // vendor payments
+  var d0=(dates&&dates[0])?dates[0]:'this week';
+  function rows(arr,accent){
+    if(!arr.length)return '<div class="rankempty">No amounts scheduled for '+d0+'</div>';
+    var tot=0;arr.forEach(function(x){tot+=x.amt;});
+    var h='';var rank=1;
+    arr.slice(0,5).forEach(function(x){
+      var pct=tot!==0?Math.max(2,Math.round(Math.abs(x.amt)/Math.abs(tot)*100)):0;
+      h+='<div class="rankrow"><div class="rankname"><span class="rankno">'+(rank++)+'</span>'+x.name+'</div>'+
+         '<div class="rankbarwrap"><div class="rankbar" style="width:'+pct+'%;background:'+accent+'"></div></div>'+
+         '<div class="rankamt'+(x.amt<0?' neg':'')+'">'+fmt(x.amt)+'</div></div>';
+    });
+    if(arr.length>5)h+='<div class="rankmore">+'+(arr.length-5)+' more…</div>';
+    h+='<div class="ranktot"><span>Total</span><span>'+fmt(tot)+'</span></div>';
+    return h;
+  }
+  return '<div class="rankgrid">'+
+    '<div class="panel rankpanel"><h3><span>📥 Customer Collections · '+d0+'</span><span class="ranksub">ranked by amount due</span></h3>'+rows(coll,'#1f7a6d')+'</div>'+
+    '<div class="panel rankpanel"><h3><span>📤 Vendor Payments · '+d0+'</span><span class="ranksub">ranked by amount owed</span></h3>'+rows(pays,'#b4632a')+'</div>'+
+    '</div>';
+}
 function buildSummary(key){
   var ent=D[key];var dates=ent.dates;var rows=ent.rows;
   if(key!=='combined')recompute(key);
@@ -574,21 +649,24 @@ function buildSummary(key){
     cashAfterOps.push(bb + inbW(w) - oo);
   }
   var caoEnd=cashAfterOps[N-1];
+  var beginCash=begin?begin.vals[0]:0;
   var wk1End=ending?ending.vals[0]:0;
   var wk2End=(ending && N>1)?ending.vals[1]:0;
+  var wk3End=(ending && N>2)?ending.vals[2]:0;
   var d1=(dates&&dates[0])?dates[0]:'Wk 1';
   var d2=(dates&&dates[1])?dates[1]:'Wk 2';
+  var d3=(dates&&dates[2])?dates[2]:'Wk 3';
   var k='<div class="kpis">'+
-    '<div class="kpi near"><div class="lab">Next 2 Weeks · Cash Position</div>'+
-      '<div class="nearrow"><div class="nearcol"><div class="nearwk">This week ('+d1+')</div><div class="val small'+(wk1End<0?' neg':'')+'">'+fmt(wk1End)+'</div></div>'+
-      '<div class="nearcol"><div class="nearwk">Next week ('+d2+')</div><div class="val small'+(wk2End<0?' neg':'')+'">'+fmt(wk2End)+'</div></div></div>'+
-      '<div class="note">projected ending balance</div></div>'+
-    '<div class="kpi end"><div class="lab">Ending Balance · Wk'+N+'</div><div class="val'+(kEnd<0?' neg':'')+'">'+fmt(kEnd)+'</div><div class="note">projected close</div></div>'+
-    '<div class="kpi in"><div class="lab">Total Inbound · '+N+'wk</div><div class="val">'+fmt(sum(inTot))+'</div><div class="note">receipts</div></div>'+
-    '<div class="kpi out"><div class="lab">Total Outbound · '+N+'wk</div><div class="val">'+fmt(sum(outTot))+'</div><div class="note">disbursements</div></div>'+
+    '<div class="kpi near"><div class="lab">Beginning Cash · '+d1+'</div><div class="val'+(beginCash<0?' neg':'')+'">'+fmt(beginCash)+'</div><div class="note">opening balance</div></div>'+
+    '<div class="kpi end"><div class="lab">Ending · Wk 1 ('+d1+')</div><div class="val'+(wk1End<0?' neg':'')+'">'+fmt(wk1End)+'</div><div class="note">this week close</div></div>'+
+    '<div class="kpi wk2"><div class="lab">Ending · Wk 2 ('+d2+')</div><div class="val'+(wk2End<0?' neg':'')+'">'+fmt(wk2End)+'</div><div class="note">projected</div></div>'+
+    '<div class="kpi in"><div class="lab">This Week Inbound</div><div class="val">'+fmt(inTot?inTot.vals[0]:0)+'</div><div class="note">receipts · '+(dates&&dates[0]?dates[0]:'Wk 1')+'</div></div>'+
+    '<div class="kpi out"><div class="lab">This Week Outbound</div><div class="val">'+fmt(outTot?outTot.vals[0]:0)+'</div><div class="note">disbursements · '+(dates&&dates[0]?dates[0]:'Wk 1')+'</div></div>'+
     '</div>';
+  // ranked current-week collections (AR) + vendor payments (AP)
+  k+=buildRankedPanels(key,dates);
   // chart of ending balance
-  k+='<div class="panel"><h3><span>'+({pneo:'pNeo',shusher:'Shusher',one20:'One 20'}[key])+' — Ending Bank Balance</span><span style="font-size:11px;color:#7a8699">updates as you edit</span></h3>'+
+  k+='<div class="panel"><h3><span>'+({pneo:'pNeo',shusher:'Shusher',one20:'One 20',combined:'pNeo + Shusher'}[key]||'')+' — Ending Bank Balance</span><span style="font-size:11px;color:#7a8699">updates as you edit</span></h3>'+
      '<div class="chartwrap"><svg id="chart_'+key+'" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet"></svg></div>'+
      '<div class="legend"><span><i style="background:#1f7a6d"></i>Ending balance</span><span><i style="background:#b3261e"></i>Zero line</span></div></div>';
   // table
@@ -1098,16 +1176,16 @@ function updateKpisSummary(key){
   var inTot=rows.find(function(r){return r.role==='inbound';});
   var outTot=rows.find(function(r){return r.role==='outbound';});
   function sum(r){if(!r)return 0;var s=0;for(var w=0;w<N;w++)s+=r.vals[w];return s;}
-  // KPI DOM order: near(2 vals: wk1,wk2), end, in, out => 5 .kpi .val
+  // KPI DOM order: beginning, wk1, wk2, inbound, outbound => 5 .kpi .val
   var vals=document.querySelectorAll('#views .kpi .val');
   if(vals.length>=5 && ending){
-    var kEnd=ending.vals[N-1];
+    var bC=begin?begin.vals[0]:0;
     var w1=ending.vals[0], w2=(N>1?ending.vals[1]:0);
-    vals[0].textContent=fmt(w1);vals[0].className='val small'+(w1<0?' neg':'');   // this week
-    vals[1].textContent=fmt(w2);vals[1].className='val small'+(w2<0?' neg':'');   // next week
-    vals[2].textContent=fmt(kEnd);vals[2].className='val'+(kEnd<0?' neg':'');
-    vals[3].textContent=fmt(sum(inTot));
-    vals[4].textContent=fmt(sum(outTot));
+    vals[0].textContent=fmt(bC);vals[0].className='val'+(bC<0?' neg':'');           // Beginning Cash
+    vals[1].textContent=fmt(w1);vals[1].className='val'+(w1<0?' neg':'');           // Wk1 end
+    vals[2].textContent=fmt(w2);vals[2].className='val'+(w2<0?' neg':'');           // Wk2 end
+    vals[3].textContent=fmt(inTot?inTot.vals[0]:0);                                 // This Week Inbound
+    vals[4].textContent=fmt(outTot?outTot.vals[0]:0);                               // This Week Outbound
   }
 }
 function recomputeKeep(key,activeInput){
